@@ -1,0 +1,71 @@
+/*Home Banner*/
+.wrapper-home-banner-img h2 {
+  margin-bottom: 10px !important;
+  margin-top: 10px !important;
+}
+
+.wrapper-heading-home {
+  /* margin-bottom: 10px !important; */
+  /* margin-top: -340px; */
+  margin-right: 765px;
+  line-height: 1.1;
+}
+
+.wrapper-heading-home h2 {
+  font-family: "Arial", sans-serif !important;
+  font-size: 25px;
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 500;
+  position: relative;
+  padding: 0 0 10px;
+  /* margin-right: 870px; */
+  margin-right: 90px;
+  white-space: nowrap;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  /* grid-template-rows: repeat(5, 1fr); */
+  grid-column-gap:6px;
+  grid-row-gap: 10px;
+}
+
+.wrapper-home-banner-img .container.site-animation .row:first-child {
+  /*CSS cho đoạn code đầu tiên*/
+  .fade-out.col-md-12.col-xs-6.col-sm-12.no_pdr.fade-box {
+    grid-area: 1 / 1 / 2 /2;
+  }
+
+  .col-md-12.col-xs-6.col-sm-12.no_pdr.padding-img.fade-box {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+}
+
+.wrapper-home-banner-img .container.site-animation .row:last-child {
+  /*CSS cho đoạn code thứ hai*/
+  .col-md-8.col-xs-12.col-sm-8.padding-img.fade-box.fade-out {
+    grid-area: 1 / 2 / 2 / 4;
+  }
+
+  .col-md-8.col-xs-12.col-sm-8.padding-img.fade-box.fade-out.row {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  .col-md-8.col-xs-12.col-sm-8.padding-img.fade-box.fade-out.row {
+    grid-area: 2 / 2 / 3 / 4;
+  }
+}
+
+.fade-out.col-md-12.col-xs-6.col-sm-12.no_pdr.fade-box img {
+  width: 100%; /* điều chỉnh chiều rộng */
+  height: auto; /* điều chỉnh chiều cao */
+}
+
+.col-md-8.col-xs-12.col-sm-8.padding-img.fade-box.fade-out img,
+.col-md-6.col-xs-6.col-sm-6.padding-img.pd_lr.fade-box img {
+  width: 372px; /* điều chỉnh chiều rộng */
+  height: 285px; /* điều chỉnh chiều cao */
+  padding-top: 10px;
+}
