@@ -1,0 +1,258 @@
+.card-detail-container {
+    margin-top: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* Thay đổi từ 'center' thành 'flex-start' */
+    padding: 20px;
+  }
+  
+  .card-detail {
+    display: flex;
+    /* border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      max-width: 800px; */
+    position: relative;
+    /* Thêm vào đây */
+  }
+  
+  .card-detail-image {
+    width: 500px;
+    height: 600px;
+  }
+  
+  .card-detail-content {
+    flex: 1;
+    padding: 20px;
+    position: relative;
+  }
+  
+  .card-detail-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 0 0 10px;
+    border-bottom: 1px dotted #dfe0e1;
+  }
+  
+  .card-detail-price {
+    font-size: 18px;
+    color: #ef683a;
+    font-weight: bold;
+    padding: 0 0 10px;
+    position: absolute;
+    /* Sử dụng position: absolute */
+    left: 5%;
+    /* Đặt vị trí ở bên trái */
+  }
+  
+  .card-detail-discount {
+    position: absolute;
+    /* Sử dụng position: absolute */
+    right: 60%;
+    /* Đặt vị trí ở bên phải */
+    text-decoration: line-through;
+    margin-top: 20px;
+  }
+  
+  .card-detail-description {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-top: 100px;
+    border-top: 1px dotted #dfe0e1;
+    list-style-type: none;/* Loại bỏ chấm đầu dòng */
+  }
+  
+  .card-detail-description ul {
+    padding: 0; /* Loại bỏ padding mặc định của danh sách */
+    margin: 0; /* Loại bỏ margin mặc định của danh sách */
+  }
+  
+  .card-detail-description li {
+    list-style-type: none; /* Loại bỏ chấm đầu dòng */
+    margin-left: 20px; /* Tạo khoảng cách từ lề trái */
+  }
+  
+  .add-to-cart-button {
+    position: relative; /* Đặt vị trí tương đối để sử dụng pseudoelements */
+    display: inline-block; /* Hiển thị là một khối */
+    padding: 10px 20px;
+    line-height: normal; /* Đặt chiều cao dòng bình thường */
+    border: 1px solid transparent;
+    border-radius: 0; /* Đặt bo tròn thành 0 để giống với mã dưới */
+    text-transform: uppercase;
+    font-size: 12px; /* Giảm kích thước phông chữ xuống 12px */
+    text-align: center; /* Căn giữa nội dung */
+    letter-spacing: 1px;
+    background-color: transparent;
+    transition: color 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86), border 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86); /* Thêm hiệu ứng chuyển đổi cho màu và viền */
+    z-index: 1;
+    color: #fff;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 40px;
+  }
+  
+  .add-to-cart-button:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #fff;
+    transition: all 0.3s;
+    z-index: -1;
+  }
+  
+  .add-to-cart-button:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #27678f;
+    z-index: -2;
+  }
+  
+  .add-to-cart-button:hover {
+    color: #252a2b;
+    border-color: #252a2b;
+  }
+  
+  .add-to-cart-button:hover:before {
+    width: 100%;
+  }
+  
+  .add-to-cart-button {
+    position: relative; /* Đặt vị trí tương đối để sử dụng pseudoelements */
+    display: inline-block; /* Hiển thị là một khối */
+    padding: 15px 20px;
+    line-height: normal; /* Đặt chiều cao dòng bình thường */
+    border: 1px solid transparent;
+    border-radius: 0; /* Đặt bo tròn thành 0 để giống với mã dưới */
+    text-transform: uppercase;
+    font-size: 12px; /* Giảm kích thước phông chữ xuống 12px */
+    text-align: center; /* Căn giữa nội dung */
+    letter-spacing: 1px;
+    background-color: transparent;
+    transition: color 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86), border 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86); /* Thêm hiệu ứng chuyển đổi cho màu và viền */
+    z-index: 1;
+    color: #fff;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 40px;
+  }
+  
+  .add-to-cart-button:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #fff;
+    transition: all 0.3s;
+    z-index: -1;
+  }
+  
+  .add-to-cart-button:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #27678f;
+    z-index: -2;
+  }
+  
+  .add-to-cart-button:hover {
+    color: #252a2b;
+    border-color: #252a2b;
+  }
+  
+  .add-to-cart-button:hover:before {
+    width: 100%;
+  }
+  
+  .add-to-cart-button-2 {
+    position: relative; /* Đặt vị trí tương đối để sử dụng pseudoelements */
+    display: inline-block; /* Hiển thị là một khối */
+    padding: 15px 20px;
+    line-height: normal; /* Đặt chiều cao dòng bình thường */
+    border: 1px solid transparent;
+    border-radius: 0; /* Đặt bo tròn thành 0 để giống với mã dưới */
+    text-transform: uppercase;
+    font-size: 12px; /* Giảm kích thước phông chữ xuống 12px */
+    text-align: center; /* Căn giữa nội dung */
+    letter-spacing: 1px;
+    background-color: transparent;
+    transition: color 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86), border 0.45s cubic-bezier(0.785, 0.135, 0.15, 0.86); /* Thêm hiệu ứng chuyển đổi cho màu và viền */
+    z-index: 1;
+    color: #fff;
+    overflow: hidden;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .add-to-cart-button-2:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 100%;
+    background-color: #fff;
+    transition: all 0.3s;
+    z-index: -1;
+  }
+  
+  .add-to-cart-button-2:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ef683a;;
+    z-index: -2;
+  }
+  
+  .add-to-cart-button-2:hover {
+    color: #252a2b;
+    border-color: #ef683a;;
+  }
+  
+  .add-to-cart-button-2:hover:before {
+    width: 100%;
+  }
+  
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  .quantity-control button {
+    background-color: #27678f;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .quantity-control button:hover {
+    background-color: #fff;
+    color: #27678f;
+  }
+  
+  .quantity-control span {
+    margin: 0 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
