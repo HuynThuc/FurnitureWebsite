@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { FaArrowLeft, FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import { setToken, decodeToken, AuthContext } from '../../Context/AuthContext';
+import { setUser, setToken, decodeToken, AuthContext } from '../../Context/AuthContext';
 import '../LoginComponent/LoginStyle.css';
 
 const Login = () => {
@@ -12,7 +12,7 @@ const Login = () => {
     password: ''
   });
   const navigate = useNavigate();
-  const { setUser } = useContext(AuthContext);
+  
   
   axios.defaults.withCredentials = true;
 
@@ -21,9 +21,12 @@ const Login = () => {
     try {
       const res = await axios.post('http://localhost:3001/login', values);
       if (res.data.Status === "Success") {
+        //sau khi đăng nhập thành công sẽ setToken (lưu token)
         console.log(res.data.Token);
         setToken(res.data.Token);
+        //giả mã để lấy thông tin user
         const user = decodeToken(res.data.Token);
+        //lưu thông tin user
         setUser(user);
         navigate('/home');
       } else {

@@ -21,8 +21,13 @@ const login = (req, res) => {
                 if (response) {
                     const id = data[0].id;
                     const name = data[0].name;
-                    const token = jwt.sign({ id, name }, "jwt-secret-key", { expiresIn: '1d' });
-                    return res.json({ Status: "Success", Token: token });
+                    const roleId = data[0].role_id;
+                    const token = jwt.sign({ id, name, roleId }, "jwt-secret-key", { expiresIn: '1d' });
+                    return res.json({ 
+                        Status: "Success", 
+                        Token: token, 
+                        User: { id, name, roleId } 
+                    });
                 } else {
                     return res.json({ Error: "Password not matched" });
                 }

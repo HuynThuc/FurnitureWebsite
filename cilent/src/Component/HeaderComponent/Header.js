@@ -138,6 +138,7 @@ const Header = () => {
                 <ul className="user-menu-list">
                   <li onClick={() => navigate('/account')}>Profile</li>
                   <li onClick={() => navigate('/settings')}>Settings</li>
+                  {user.roleId === 1 && <li onClick={() => navigate('/admin-2')}>Admin</li>}
                   <li onClick={handleLogout}>Logout</li>
                 </ul>
               </div>
