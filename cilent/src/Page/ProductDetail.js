@@ -4,6 +4,7 @@ import './CSS/ProductDetail.css';
 import axios from 'axios';
 import { AuthContext } from '../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import parse from 'html-react-parser'
 
 const ProductDetail = () => {
     const { id } = useParams();
@@ -63,7 +64,7 @@ const ProductDetail = () => {
                 <div className="card-detail-content">
                     <h2 className="card-detail-title">{product.ten_sanpham}</h2>
                     <p className="card-detail-price">Giá: {product.gia}</p>
-                    <p className="card-detail-description">{product.mo_ta}</p>
+                    <p className="card-detail-description">{parse(product.mo_ta)}</p>
                     <div className="quantity-control">
                         <button onClick={decreaseQuantity}>-</button>
                         <span>{quantity}</span>

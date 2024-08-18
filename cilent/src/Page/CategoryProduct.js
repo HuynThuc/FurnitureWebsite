@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Slider from '../Component/SliderComponent/Slider';
 
+
 const CategoryProduct = ({ categoryId, title }) => {
     const [products, setProducts] = useState([]);
 

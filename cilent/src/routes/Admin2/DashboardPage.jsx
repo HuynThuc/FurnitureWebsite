@@ -4,6 +4,8 @@ import { LaptopOutlined, NotificationOutlined, UserOutlined, PlusOutlined } from
 import { EditOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Layout, Menu, Typography, theme, Table, Modal, Form, Input, Button, Select, Upload, message } from 'antd';
 import AdminImage from '../../images/logo-moho.webp';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
 
 
@@ -619,12 +621,13 @@ const DashboardPage = () => {
                             <Form.Item name="ten_sanpham" label="Tên sản phẩm" rules={[{ required: true, message: 'Please input the name!' }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item
-                                name="mo_ta"
-                                label="Mô tả"
-                                rules={[{ required: true, message: 'Please input the description!' }]}
-                            >
-
+                            <Form.Item name="mo_ta" label="Mô tả" rules={[{ required: true, message: 'Please input the description!' }]}>
+                                {/* Use ReactQuill for rich text editor */}
+                                <ReactQuill
+                                    
+                                   
+                                    placeholder="Mô tả sản phẩm"
+                                />
                             </Form.Item>
                             <Form.Item name="gia" label="Giá" rules={[{ required: true, message: 'Please input the price!' }]}>
                                 <Input />
