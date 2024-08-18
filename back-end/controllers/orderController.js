@@ -79,4 +79,19 @@ const createOrder = (req, res) => {
     });
 };
 
-module.exports = { createOrder };
+
+//Lấy thông tin đơn hàng 
+const getOrder = (req, res) => {
+    const sql = `SELECT oder.id_order, oder.total_price, user.name, address_order.*
+FROM oder
+JOIN user ON oder.user_id = user.id
+JOIN address_order ON oder.address_id = address_order.id`;
+    db.query(sql, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: "Internal server error" });
+        }
+        return res.json(results);
+    });
+}
+
+module.exports = { createOrder, getOrder };

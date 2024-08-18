@@ -43,7 +43,7 @@ const deleteProduct = (req, res) => {
 };
 
 //Sửa sản phẩm
-// controllers/productController.js
+
 const updateProduct = (req, res) => {
     const { id } = req.params;
     const { ten_sanpham, mo_ta, gia } = req.body;
@@ -66,8 +66,6 @@ const updateProduct = (req, res) => {
         }
     });
 };
-
-
 
 //Thêm loại sản phẩm
 const addCategory = (req, res) => {

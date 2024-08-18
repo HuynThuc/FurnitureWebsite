@@ -39,6 +39,7 @@ const items2 = [
         label: 'Đơn Hàng',
 
     },
+   
 ];
 
 // Sample data and columns for each subnav item
@@ -90,12 +91,15 @@ const DashboardPage = () => {
 
     const [products, setProducts] = useState([]);
     const [category, setCategories] = useState([]);
+    const [order, setOrder] = useState([]);
 
     const handleSelectChange = (value) => {
         console.log('Selected value:', value); // Kiểm tra giá trị được chọn
         form.setFieldsValue({ loaisanpham: value });
     };
 
+
+    //Lấy loại sản phẩm
     useEffect(() => {
         axios.get('http://localhost:3001/products') // Gọi API để chỉ lấy sản phẩm 
             .then(response => {
@@ -105,21 +109,6 @@ const DashboardPage = () => {
                 console.error('Error fetching kitchen products:', error);
             });
     }, []);
-
-     // Hàm xóa sản phẩm
-     const deleteProduct = async (productId) => {
-        try {
-            const response = await axios.delete(`http://localhost:3001/deleteProduct/${productId}`);
-            console.log(response.data); // Xem phản hồi từ server
-        } catch (error) {
-            console.error('Error deleting product:', error.response ? error.response.data : error.message);
-        }
-    };
-    
-    
-
-
-
 
     // Lấy loại sản phẩm
     useEffect(() => {
@@ -132,7 +121,26 @@ const DashboardPage = () => {
             });
     }, []);
 
+    useEffect(()=> {
+        axios.get('http://localhost:3001/getOrder')
+        .then(response => {
+            setOrder(response.data);
+        })
+        .catch(error => {
+            console.error('Error fetching kitchen products:', error);
+        });
+    }, []);
 
+     // Hàm xóa sản phẩm
+     const deleteProduct = async (productId) => {
+        try {
+            const response = await axios.delete(`http://localhost:3001/deleteProduct/${productId}`);
+            console.log(response.data); // Xem phản hồi từ server
+        } catch (error) {
+            console.error('Error deleting product:', error.response ? error.response.data : error.message);
+        }
+    };
+    
     //Thêm loại sản phẩm
     const addCategory = (categoryData) => {
         axios.post('http://localhost:3001/loaisp', categoryData, {
@@ -171,18 +179,7 @@ const DashboardPage = () => {
 
         
     };
-    // const updateProduct = async (productId, productData) => {
-    //     try {
-    //         const response = await axios.put(`http://localhost:3001/updateProduct/${productId}`, productData, {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data'
-    //             }
-    //         });
-    //         console.log('Product updated successfully:', response.data);
-    //     } catch (error) {
-    //         console.error('Error updating product:', error.response ? error.response.data : error.message);
-    //     }
-    // };
+   
     
     
     
@@ -257,11 +254,14 @@ const DashboardPage = () => {
     };
     
 
+
+    //Nút ok khi xóa
     const handleDeleteModalOk = () => {
         if (recordToDelete) {
             deleteProduct(recordToDelete.id); // Gọi hàm xóa với ID sản phẩm cần xóa
         }
     };
+    //Nút cancel
     const handleModalCancel = () => {
         setEditModalVisible(false);
         setDeleteModalVisible(false);
@@ -281,7 +281,7 @@ const DashboardPage = () => {
                 setDataSource(category);
                 break;
             case 'sub3':
-                setDataSource(orderData);
+                setDataSource(order);
                 break;
             default:
                 break;
@@ -406,17 +406,28 @@ const DashboardPage = () => {
     const orderColumns = [
         {
             title: 'Order ID',
-            dataIndex: 'orderId',
-            key: 'orderId',
+            dataIndex: 'id_order',
+            key: 'id_order',
         },
         {
             title: 'Customer',
-            dataIndex: 'customer',
-            key: 'customer',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'Phone',
+            dataIndex: 'phone',
+            key: 'phone',
+        },
+        {
+            title: 'Address',
+            dataIndex: 'detailed_address',
+            
+            key: 'detailed_address',
         },
         {
             title: 'Total',
-            dataIndex: 'total',
+            dataIndex: 'total_price',
             key: 'total',
         },
         {

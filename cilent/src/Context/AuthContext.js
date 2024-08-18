@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 export const AuthContext = createContext();
@@ -10,7 +10,7 @@ export const setToken = (token) => {
 }
 //Hàm lưu user
 export const setUser = (user) => {
-    localStorage.setItem('User', user.name); 
+   
 }
 
 export const fetchToken = () => {
@@ -46,23 +46,12 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
 
+
     return (
         <AuthContext.Provider value={{ user, setUser }}>
             {children}
         </AuthContext.Provider>
     );
 }
-
-// export function RequireToken({ children }) {
-//     let auth = fetchToken();
-//     let location = useLocation();
-
-//     if (!auth) {
-//         return <Navigate to="/login" state={{ from: location }} />;
-//     }
-//     return children;
-// }
-
-
 
 export default AuthContext;

@@ -23,6 +23,7 @@ import ProductDetail from './Page/ProductDetail';
 import ProfileTab from './Component/ProfileTabs/ProfileTab';
 import Address from './Page/Address';
 import CheckOut from './Page/CheckOut';
+import RequireAuth from './routes/RequireAuth'; // Import RequireAuth
 
 
 // Layout component for wrapping header and footer
@@ -59,7 +60,15 @@ function App() {
               </Route>
               
 
-              <Route path="/admin-2" element={<DashboardPage/>} />
+              
+              <Route 
+                path="/admin-2" 
+                element={
+                  <RequireAuth role={1}>
+                    <DashboardPage />
+                  </RequireAuth>
+                } 
+              />
               <Route path="/cart" element={<Cart />} />
               <Route path="/productdetail/:id" element={<ProductDetail/>} />
 

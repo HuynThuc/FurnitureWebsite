@@ -134,7 +134,7 @@ const Header = () => {
           <>
             <div className="user-menu">
               <div className="user-menu-container">
-                <p>Welcome, {user.name}!</p>
+                <p>Welcome, {user.roleId}!</p>
                 <ul className="user-menu-list">
                   <li onClick={() => navigate('/account')}>Profile</li>
                   <li onClick={() => navigate('/settings')}>Settings</li>
