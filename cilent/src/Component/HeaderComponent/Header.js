@@ -65,10 +65,7 @@ const Header = () => {
               </div>
             </li>
             <li><a href="/bo-suu-tap-moi">Bộ Sưu Tập Mới</a></li>
-            {/* Các liên kết khác */}
-            {user && user.roleId === 1 && (
-              <li><a href="/admin-2">Admin</a></li>
-            )}
+           
             <li className="dropdown" onMouseEnter={handleMouseEnter(setIsFourthDropdownOpen)} onMouseLeave={handleMouseLeave(setIsFourthDropdownOpen)}>
               <a href="/khuyen-mai">Khuyến Mãi</a>
               <div className="dropdown-icon">

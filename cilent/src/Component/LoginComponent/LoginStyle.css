@@ -1,10 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
+
+
+
 .login-container {
+  display: flex;
+  justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
     max-width: 360px; /* Giảm kích thước tối đa */
     padding: 20px;
     background-color: #fff;
     border-radius: 10px;
+    justify-content: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Giảm độ bóng */
 }
 
