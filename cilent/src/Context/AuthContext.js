@@ -8,10 +8,7 @@ export const AuthContext = createContext();
 export const setToken = (token) => {
     localStorage.setItem('Token', token); 
 }
-//Hàm lưu user
-export const setUser = (user) => {
-   
-}
+
 
 export const fetchToken = () => {
     return localStorage.getItem('Token');

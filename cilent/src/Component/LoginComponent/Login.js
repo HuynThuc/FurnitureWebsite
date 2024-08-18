@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { FaArrowLeft, FaUser, FaLock } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
-import { setUser, setToken, decodeToken, AuthContext } from '../../Context/AuthContext';
+import { setToken, decodeToken, AuthContext } from '../../Context/AuthContext';
 import '../LoginComponent/LoginStyle.css';
 
 const Login = () => {
@@ -12,7 +12,7 @@ const Login = () => {
     password: ''
   });
   const navigate = useNavigate();
-  
+  const { setUser } = useContext(AuthContext);
   
   axios.defaults.withCredentials = true;
 
