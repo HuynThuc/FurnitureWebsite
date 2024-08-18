@@ -3,8 +3,10 @@ import axios from 'axios';
 import { LaptopOutlined, NotificationOutlined, UserOutlined, PlusOutlined } from '@ant-design/icons';
 import { EditOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons';
 import { Avatar, Breadcrumb, Layout, Menu, Typography, theme, Table, Modal, Form, Input, Button, Select, Upload, message } from 'antd';
-
 import AdminImage from '../../images/logo-moho.webp';
+
+
+
 import '../Admin2/DashboardPage.css';
 
 
@@ -39,7 +41,7 @@ const items2 = [
         label: 'Đơn Hàng',
 
     },
-   
+
 ];
 
 // Sample data and columns for each subnav item
@@ -87,7 +89,7 @@ const DashboardPage = () => {
     const [selectedMenuKey, setSelectedMenuKey] = useState('sub1');
     const [dataSource, setDataSource] = useState([]);
     const [form] = Form.useForm();
-    
+
 
     const [products, setProducts] = useState([]);
     const [category, setCategories] = useState([]);
@@ -97,6 +99,8 @@ const DashboardPage = () => {
         console.log('Selected value:', value); // Kiểm tra giá trị được chọn
         form.setFieldsValue({ loaisanpham: value });
     };
+
+
 
 
     //Lấy loại sản phẩm
@@ -112,7 +116,7 @@ const DashboardPage = () => {
 
     // Lấy loại sản phẩm
     useEffect(() => {
-        axios.get('http://localhost:3001/categories') 
+        axios.get('http://localhost:3001/categories')
             .then(response => {
                 setCategories(response.data);
             })
@@ -121,18 +125,18 @@ const DashboardPage = () => {
             });
     }, []);
 
-    useEffect(()=> {
+    useEffect(() => {
         axios.get('http://localhost:3001/getOrder')
-        .then(response => {
-            setOrder(response.data);
-        })
-        .catch(error => {
-            console.error('Error fetching kitchen products:', error);
-        });
+            .then(response => {
+                setOrder(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching kitchen products:', error);
+            });
     }, []);
 
-     // Hàm xóa sản phẩm
-     const deleteProduct = async (productId) => {
+    // Hàm xóa sản phẩm
+    const deleteProduct = async (productId) => {
         try {
             const response = await axios.delete(`http://localhost:3001/deleteProduct/${productId}`);
             console.log(response.data); // Xem phản hồi từ server
@@ -140,7 +144,7 @@ const DashboardPage = () => {
             console.error('Error deleting product:', error.response ? error.response.data : error.message);
         }
     };
-    
+
     //Thêm loại sản phẩm
     const addCategory = (categoryData) => {
         axios.post('http://localhost:3001/loaisp', categoryData, {
@@ -159,7 +163,7 @@ const DashboardPage = () => {
             });
     };
 
-   
+
     //Thêm sản phẩm
     const addProduct = (productData) => {
         axios.post('http://localhost:3001/create', productData, {
@@ -177,12 +181,12 @@ const DashboardPage = () => {
                 console.error('Error adding product:', error);
             });
 
-        
+
     };
-   
-    
-    
-    
+
+
+
+
 
 
     const handleAddModalOk = () => {
@@ -205,7 +209,7 @@ const DashboardPage = () => {
                 addProduct(productData);
             } else if (selectedMenuKey === 'sub2-2') {
                 const categoryData = new FormData();
-                categoryData.append('ten_loaisp' ,values.ten_loaisp);
+                categoryData.append('ten_loaisp', values.ten_loaisp);
                 if (values.file && values.file.fileList && values.file.fileList.length > 0) {
                     categoryData.append('file', values.file.fileList[0].originFileObj); // Lấy ra tệp ảnh từ fileList
                 } else {
@@ -219,7 +223,7 @@ const DashboardPage = () => {
             console.log('Validate Failed:', info);
         });
     };
-                           
+
     const handleEdit = (record) => {
         setRecordToEdit(record);
         form.setFieldsValue(record);
@@ -235,7 +239,7 @@ const DashboardPage = () => {
         form.validateFields().then(values => {
             // Lấy id của sản phẩm cần cập nhật
             const id = recordToEdit.id; // Đảm bảo recordToEdit có chứa id sản phẩm
-    
+
             // Gửi yêu cầu PUT đến server để cập nhật sản phẩm
             axios.put(`http://localhost:3001/updateProduct/${id}`, values)
                 .then(response => {
@@ -252,7 +256,7 @@ const DashboardPage = () => {
             console.log('Validate Failed:', info);
         });
     };
-    
+
 
 
     //Nút ok khi xóa
@@ -422,7 +426,7 @@ const DashboardPage = () => {
         {
             title: 'Address',
             dataIndex: 'detailed_address',
-            
+
             key: 'detailed_address',
         },
         {
@@ -510,7 +514,7 @@ const DashboardPage = () => {
             <Footer style={{ textAlign: 'center' }}>
                 PTGAMING ©{new Date().getFullYear()} Created by Ant UED
             </Footer>
-            
+
             <Modal
                 title="Chỉnh Sửa"
                 visible={editModalVisible}
@@ -573,9 +577,9 @@ const DashboardPage = () => {
                     {selectedMenuKey === 'sub2-2' && (
                         <Form.Item name="ten_loaisanpham" label="Tên loại sản phẩm" rules={[{ required: true, message: 'Vui lòng nhập tên loại sản phẩm!' }]}>
                             <Input />
-                      
+
                         </Form.Item>
-                        
+
                     )}
 
                     {selectedMenuKey === 'sub3' && (
@@ -615,8 +619,12 @@ const DashboardPage = () => {
                             <Form.Item name="ten_sanpham" label="Tên sản phẩm" rules={[{ required: true, message: 'Please input the name!' }]}>
                                 <Input />
                             </Form.Item>
-                            <Form.Item name="mo_ta" label="Mô tả" rules={[{ required: true, message: 'Please input the description!' }]}>
-                                <Input />
+                            <Form.Item
+                                name="mo_ta"
+                                label="Mô tả"
+                                rules={[{ required: true, message: 'Please input the description!' }]}
+                            >
+
                             </Form.Item>
                             <Form.Item name="gia" label="Giá" rules={[{ required: true, message: 'Please input the price!' }]}>
                                 <Input />
@@ -651,11 +659,11 @@ const DashboardPage = () => {
                     )}
                     {selectedMenuKey === 'sub2-2' && (
                         <>
-                         <Form.Item name="ten_loaisp" label="Tên loại sản phẩm" rules={[{ required: true, message: 'Vui lòng nhập tên loại sản phẩm!' }]}>
-                         <Input />
-                   
-                     </Form.Item>
-                     <Form.Item name="file" label="Ảnh" rules={[{ required: true, message: 'Vui lòng tải lên một hình ảnh!' }]}>
+                            <Form.Item name="ten_loaisp" label="Tên loại sản phẩm" rules={[{ required: true, message: 'Vui lòng nhập tên loại sản phẩm!' }]}>
+                                <Input />
+
+                            </Form.Item>
+                            <Form.Item name="file" label="Ảnh" rules={[{ required: true, message: 'Vui lòng tải lên một hình ảnh!' }]}>
                                 <Upload
                                     beforeUpload={() => false} // Ngăn chặn tự động tải lên
                                     listType="picture"
@@ -666,8 +674,8 @@ const DashboardPage = () => {
 
                             </Form.Item>
                         </>
-                        
-                     
+
+
                     )}
                 </Form>
             </Modal>
@@ -676,5 +684,7 @@ const DashboardPage = () => {
         </Layout>
     );
 };
+
+
 
 export default DashboardPage;
