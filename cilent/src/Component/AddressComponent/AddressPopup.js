@@ -2,8 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import AuthContext from '../../Context/AuthContext';
 
-const AddressPopup = ({ showPopup, onClose, onSubmit }) => {
-  const { user } = useContext(AuthContext); // Lấy user từ AuthContext
+const AddressPopup = ({ showPopup, onClose, onSubmit, fetchAddresses }) => {
+  const { user } = useContext(AuthContext);
   const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
@@ -16,14 +16,13 @@ const AddressPopup = ({ showPopup, onClose, onSubmit }) => {
     district: '',
     ward: '',
     detail_address: '',
-    user_id: '', // Chưa có user_id khi khởi tạo
+    user_id: '',
   });
 
   useEffect(() => {
-    // Cập nhật user_id trong formData khi user thay đổi
     setFormData((prevFormData) => ({
       ...prevFormData,
-      user_id: user?.id || '', // Đảm bảo user_id luôn cập nhật đúng
+      user_id: user?.id || '',
     }));
   }, [user]);
 
@@ -47,42 +46,42 @@ const AddressPopup = ({ showPopup, onClose, onSubmit }) => {
     setSelectedCity(cityId);
     setDistricts([]);
     setWards([]);
-  
+
     if (cityId !== '') {
       const city = cities.find((c) => c.Id === cityId);
       setDistricts(city.Districts || []);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        city: city.Name, // Lưu tên thành phố
+        city: city.Name,
       }));
     }
   };
-  
+
   const handleDistrictChange = (event) => {
     const districtId = event.target.value;
     setSelectedDistrict(districtId);
     setWards([]);
-  
+
     if (districtId !== '') {
       const city = cities.find((c) => c.Id === selectedCity);
       const district = city.Districts.find((d) => d.Id === districtId);
       setWards(district.Wards || []);
       setFormData((prevFormData) => ({
         ...prevFormData,
-        district: district.Name, // Lưu tên quận/huyện
+        district: district.Name,
       }));
     }
   };
-  
+
   const handleWardChange = (event) => {
     const wardId = event.target.value;
     const ward = wards.find((w) => w.Id === wardId);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      ward: ward.Name, // Lưu tên phường/xã
+      ward: ward.Name,
     }));
   };
-  
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({
@@ -92,11 +91,12 @@ const AddressPopup = ({ showPopup, onClose, onSubmit }) => {
   };
 
   const handleSubmit = async () => {
-    console.log('Form Data:', formData); // Kiểm tra dữ liệu trước khi gửi
+    console.log('Form Data:', formData);
     try {
       const response = await axios.post('http://localhost:3001/address/add', formData);
       if (response.data.Status === 'Success') {
-        onSubmit(); // Gọi hàm onSubmit từ props để đóng popup
+        onSubmit(); // Gọi hàm onSubmit để đóng popup và fetchAddress
+        fetchAddresses();
       } else {
         alert('Đã có lỗi xảy ra!');
       }
@@ -145,9 +145,13 @@ const AddressPopup = ({ showPopup, onClose, onSubmit }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Chọn tỉnh/thành phố</label>
-          <select className="w-full p-2 border border-gray-300 rounded-md" onChange={handleCityChange}>
-            <option value="">Chọn tỉnh/thành phố</option>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Tỉnh/Thành phố</label>
+          <select
+            value={selectedCity}
+            onChange={handleCityChange}
+            className="w-full p-2 border border-gray-300 rounded-md"
+          >
+            <option value="">Chọn Tỉnh/Thành phố</option>
             {cities.map((city) => (
               <option key={city.Id} value={city.Id}>
                 {city.Name}
@@ -157,13 +161,13 @@ const AddressPopup = ({ showPopup, onClose, onSubmit }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Chọn quận/huyện</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Quận/Huyện</label>
           <select
-            className="w-full p-2 border border-gray-300 rounded-md"
+            value={selectedDistrict}
             onChange={handleDistrictChange}
-            disabled={!selectedCity}
+            className="w-full p-2 border border-gray-300 rounded-md"
           >
-            <option value="">Chọn quận/huyện</option>
+            <option value="">Chọn Quận/Huyện</option>
             {districts.map((district) => (
               <option key={district.Id} value={district.Id}>
                 {district.Name}
@@ -173,13 +177,13 @@ const AddressPopup = ({ showPopup, onClose, onSubmit }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Chọn phường/xã</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Phường/Xã</label>
           <select
-            className="w-full p-2 border border-gray-300 rounded-md"
+            value={formData.ward}
             onChange={handleWardChange}
-            disabled={!selectedDistrict}
+            className="w-full p-2 border border-gray-300 rounded-md"
           >
-            <option value="">Chọn phường/xã</option>
+            <option value="">Chọn Phường/Xã</option>
             {wards.map((ward) => (
               <option key={ward.Id} value={ward.Id}>
                 {ward.Name}
@@ -196,15 +200,15 @@ const AddressPopup = ({ showPopup, onClose, onSubmit }) => {
             value={formData.detail_address}
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded-md"
-            placeholder="Nhập địa chỉ cụ thể"
+            placeholder="Nhập địa chỉ chi tiết"
           />
         </div>
 
         <button
           onClick={handleSubmit}
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+          className="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
         >
-          Lưu địa chỉ
+          Lưu
         </button>
       </div>
     </div>

@@ -34,7 +34,19 @@ const getAddress = (req, res) => {
         return res.json(results);
     });
 }
+
+const deleteAddress = (req, res) => {
+  const id = req.params.id;
+  const sql = "DELETE address_order FROM address_order WHERE id = ?" 
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+        return res.status(500).json({ error: "Internal server error" });
+    }
+    return res.json(results);
+});
+
+}
   
 
 
-module.exports = { addAddress, getAddress };
+module.exports = { addAddress, getAddress, deleteAddress };

@@ -79,8 +79,6 @@ const createOrder = (req, res) => {
     });
 };
 
-
-
 //Lấy thông tin đơn hàng 
 const getOrder = (req, res) => {
     const sql = `SELECT oder.id_order, oder.total_price, user.name, address_order.*

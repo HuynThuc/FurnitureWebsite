@@ -3,7 +3,7 @@ import Header from '../HeaderComponent/Header';
 
 const ProfileTab = () => {
   return (
-    <div className="max-w-[1200px] mx-auto bg-color-dark p-4 mt-[200px] mb-5 rounded-lg shadow-custom-dark">
+    <div className="max-w-[1200px] mx-auto  p-4 mt-[200px] mb-5 rounded-lg shadow-custom-dark">
       <div className="text-center mb-4">
         <h2 className="text-3xl font-semibold">Tài khoản của bạn</h2>
       </div>

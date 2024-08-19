@@ -7,7 +7,7 @@ import axios from 'axios'; // Đảm bảo rằng bạn đã cài đặt axios
 const Checkout = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState('');
-    const [paymentMethod, setPaymentMethod] = useState('1002252882'); // Mặc định là COD
+    const [paymentMethod, setPaymentMethod] = useState('COD'); // Mặc định là COD
     const { user } = useContext(AuthContext);
     const [addresses, setAddresses] = useState([]);
 
@@ -133,14 +133,14 @@ const Checkout = () => {
                             <div className="radio-wrapper flex items-center">
                                 <input
                                     type="radio"
-                                    id="payment_method_id_1002252882"
+                                    id="payment_method_id_COD"
                                     className="mr-4"
                                     name="payment_method_id"
-                                    value="1002252882"
-                                    checked={paymentMethod === '1002252882'}
-                                    onChange={() => setPaymentMethod('1002252882')}
+                                    value="COD"
+                                    checked={paymentMethod === 'COD'}
+                                    onChange={() => setPaymentMethod('COD')}
                                 />
-                                <label className="flex items-center space-x-4" htmlFor="payment_method_id_1002252882">
+                                <label className="flex items-center space-x-4" htmlFor="payment_method_id_COD">
                                     <img
                                         className="w-12 h-12"
                                         src="https://hstatic.net/0/0/global/design/seller/image/payment/cod.svg?v=6"
@@ -153,14 +153,14 @@ const Checkout = () => {
                             <div className="radio-wrapper flex items-center">
                                 <input
                                     type="radio"
-                                    id="payment_method_id_1002965974"
+                                    id="payment_method_id_MOMO"
                                     className="mr-4"
                                     name="payment_method_id"
-                                    value="1002965974"
-                                    checked={paymentMethod === '1002965974'}
-                                    onChange={() => setPaymentMethod('1002965974')}
+                                    value="MOMO"
+                                    checked={paymentMethod === 'MOMO'}
+                                    onChange={() => setPaymentMethod('MOMO')}
                                 />
-                                <label className="flex items-center space-x-4" htmlFor="payment_method_id_1002965974">
+                                <label className="flex items-center space-x-4" htmlFor="payment_method_id_MOMO">
                                     <img
                                         className="w-12 h-12"
                                         src="https://hstatic.net/0/0/global/design/seller/image/payment/momo.svg?v=6"

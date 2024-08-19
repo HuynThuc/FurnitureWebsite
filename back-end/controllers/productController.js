@@ -34,9 +34,9 @@ const deleteProduct = (req, res) => {
             res.status(500).json({ error: "Internal server error" });
         } else {
             if (result.affectedRows > 0) {
-                res.json({ message: "Cart item deleted successfully" });
+                res.json({ message: " deleted successfully" });
             } else {
-                res.status(404).json({ error: "Cart item not found" });
+                res.status(404).json({ error: " not found" });
             }
         }
     });
