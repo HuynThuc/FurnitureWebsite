@@ -7,20 +7,15 @@ import AdminImage from '../../images/logo-moho.webp';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import Quill styles
 
-
-
 import '../Admin2/DashboardPage.css';
 
 
 const { Option } = Select;
-
-
-
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
 
 
-
+// Đây là danh sách các mục menu cho phần điều hướng bên trái của trang Dashboard. Mỗi mục có một key, icon, và label để xác định và hiển thị trong menu.
 const items2 = [
     {
         key: 'sub1',
@@ -97,18 +92,16 @@ const DashboardPage = () => {
     const [category, setCategories] = useState([]);
     const [order, setOrder] = useState([]);
 
-    const handleSelectChange = (value) => {
-        console.log('Selected value:', value); // Kiểm tra giá trị được chọn
-        form.setFieldsValue({ loaisanpham: value });
-    };
+    
 
 
 
 
-    //Lấy loại sản phẩm
+    //Lấy sản phẩm
     useEffect(() => {
         axios.get('http://localhost:3001/products') // Gọi API để chỉ lấy sản phẩm 
             .then(response => {
+                //products sẽ nơi lưu thông tin
                 setProducts(response.data);
             })
             .catch(error => {
@@ -165,7 +158,6 @@ const DashboardPage = () => {
             });
     };
 
-
     //Thêm sản phẩm
     const addProduct = (productData) => {
         axios.post('http://localhost:3001/create', productData, {
@@ -185,15 +177,50 @@ const DashboardPage = () => {
 
 
     };
+   
+
+    //nút edit
+    const handleEdit = (record) => {
+        setRecordToEdit(record);
+        form.setFieldsValue(record);
+        setEditModalVisible(true);
+    };
+
+    //nút xóa
+    const handleDelete = (record) => {
+        setRecordToDelete(record);
+        setDeleteModalVisible(true);
+    };
+
+    const handleEditModalOk = () => {
+        form.validateFields().then(values => {
+            // Lấy id của sản phẩm cần cập nhật
+            const id = recordToEdit.id; // Đảm bảo recordToEdit có chứa id sản phẩm
+
+            // Gửi yêu cầu PUT đến server để cập nhật sản phẩm
+            axios.put(`http://localhost:3001/updateProduct/${id}`, values)
+                .then(response => {
+                    // Xử lý phản hồi thành công
+                    message.success('Cập nhật sản phẩm thành công!');
+                    setEditModalVisible(false); // Đóng modal sau khi cập nhật thành công
+                })
+                .catch(error => {
+                    // Xử lý lỗi
+                    console.error('Có lỗi xảy ra:', error);
+                    message.error('Cập nhật sản phẩm thất bại. Vui lòng thử lại!');
+                });
+        }).catch(info => {
+            console.log('Validate Failed:', info);
+        });
+    };
 
 
-
-
-
-
-    const handleAddModalOk = () => {
+     //nút ok khi thêm 
+     const handleAddModalOk = () => {
+        // Xác thực dữ liệu nhập từ form và lấy các giá trị.
         form.validateFields().then(values => {
             if (selectedMenuKey === 'sub2-1') {
+                // Tạo một đối tượng FormData để chứa dữ liệu sản phẩm, bao gồm cả các tệp đính kèm.
                 const productData = new FormData();
                 productData.append('ten_sanpham', values.ten_sanpham);
                 productData.append('mo_ta', values.mo_ta);
@@ -225,42 +252,6 @@ const DashboardPage = () => {
             console.log('Validate Failed:', info);
         });
     };
-
-    const handleEdit = (record) => {
-        setRecordToEdit(record);
-        form.setFieldsValue(record);
-        setEditModalVisible(true);
-    };
-
-    const handleDelete = (record) => {
-        setRecordToDelete(record);
-        setDeleteModalVisible(true);
-    };
-
-    const handleEditModalOk = () => {
-        form.validateFields().then(values => {
-            // Lấy id của sản phẩm cần cập nhật
-            const id = recordToEdit.id; // Đảm bảo recordToEdit có chứa id sản phẩm
-
-            // Gửi yêu cầu PUT đến server để cập nhật sản phẩm
-            axios.put(`http://localhost:3001/updateProduct/${id}`, values)
-                .then(response => {
-                    // Xử lý phản hồi thành công
-                    message.success('Cập nhật sản phẩm thành công!');
-                    setEditModalVisible(false); // Đóng modal sau khi cập nhật thành công
-                })
-                .catch(error => {
-                    // Xử lý lỗi
-                    console.error('Có lỗi xảy ra:', error);
-                    message.error('Cập nhật sản phẩm thất bại. Vui lòng thử lại!');
-                });
-        }).catch(info => {
-            console.log('Validate Failed:', info);
-        });
-    };
-
-
-
     //Nút ok khi xóa
     const handleDeleteModalOk = () => {
         if (recordToDelete) {
@@ -274,6 +265,8 @@ const DashboardPage = () => {
         setAddModalVisible(false);
     };
 
+
+    //Hàm lưu dữ liệu datasource
     const handleMenuClick = ({ key }) => {
         setSelectedMenuKey(key);
         switch (key) {
@@ -449,6 +442,8 @@ const DashboardPage = () => {
         },
     ];
 
+
+    //lấy bảng
     const getColumns = () => {
         switch (selectedMenuKey) {
             case 'sub1':
@@ -491,6 +486,7 @@ const DashboardPage = () => {
                             defaultOpenKeys={['sub1']}
                             style={{ height: '100%' }}
                             items={items2}
+                            //Lấy menu
                             onClick={handleMenuClick} // Handle menu click
                         />
                     </Sider>
@@ -639,7 +635,7 @@ const DashboardPage = () => {
                             >
                                 <Select
                                     placeholder="Chọn loại sản phẩm"
-                                    onChange={handleSelectChange}
+                                    
                                 >
                                     {category.map((category) => (
                                         <Option key={category.id_loaisanpham} value={category.id_loaisanpham}>
