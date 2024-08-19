@@ -5,7 +5,8 @@ const authRoutes = require('./routes/authRoutes');
 const productRoutes = require('./routes/productRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const addressRoutes = require('./routes/addressRoutes');
-const orderRoutes = require('./routes/orderRoutes')
+const orderRoutes = require('./routes/orderRoutes');
+const paymentRoutes = require('./routes/paymentRoutes')
 
 const app = express();
 app.use(cors({
@@ -21,6 +22,7 @@ app.use(productRoutes);
 app.use(cartRoutes);
 app.use(addressRoutes);
 app.use(orderRoutes);
+app.use(paymentRoutes);
 
 app.listen(3001, () => {
     console.log("Listening on port 3001...");

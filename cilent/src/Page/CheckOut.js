@@ -14,15 +14,15 @@ const Checkout = () => {
     useEffect(() => {
         // Hàm lấy dữ liệu địa chỉ từ API
         const fetchAddresses = async () => {
-          try {
-            // Thay đổi URL API này thành URL phù hợp của bạn
-            const response = await axios.get(`http://localhost:3001/api/address/${user.id}`);
-            setAddresses(response.data);
-          } catch (error) {
-            console.error('Error fetching addresses:', error);
-          }
+            try {
+                // Thay đổi URL API này thành URL phù hợp của bạn
+                const response = await axios.get(`http://localhost:3001/api/address/${user.id}`);
+                setAddresses(response.data);
+            } catch (error) {
+                console.error('Error fetching addresses:', error);
+            }
         };
-    
+
         fetchAddresses();
     }, [user]);
 
@@ -52,15 +52,23 @@ const Checkout = () => {
             await axios.post('http://localhost:3001/createOrder', {
                 userId: user.id,
                 addressId: selectedAddress,
-               
-            });
+                paymentMethod: paymentMethod, // Gửi phương thức thanh toán
 
+            });
+             // Kiểm tra phương thức thanh toán đã chọn
+        if (paymentMethod === '1002965974') { // Mã phương thức thanh toán MoMo
+            const paymentResponse = await axios.post('http://localhost:3001/payment', {
+              
+            });
+            window.location.href = paymentResponse.data.payUrl; // Chuyển hướng tới trang thanh toán MoMo
+        } else {
             // Xử lý sau khi đơn hàng được tạo thành công
             alert('Đơn hàng đã được tạo thành công.');
-        } catch (error) {
-            console.error('Error placing order:', error);
-            alert('Có lỗi xảy ra khi đặt hàng.');
         }
+    } catch (error) {
+        console.error('Error placing order:', error);
+        alert('Có lỗi xảy ra khi đặt hàng.');
+    }
     };
 
     return (
@@ -71,14 +79,14 @@ const Checkout = () => {
                     <h2 className="text-2xl font-bold mb-4 text-gray-800">Thông tin giao hàng</h2>
 
                     <div className="section-content border border-gray-300 p-4 rounded-lg bg-white shadow-md">
-                       
+
                         <div className="logged-in-customer-information">
                             <div className="flex items-center space-x-4 mb-4">
                                 <div className="w-24 h-24 bg-gray-200 rounded-full overflow-hidden">
                                     <img src="//www.gravatar.com/avatar/194edef3f0381b63a9a2001fe3b6797a.jpg?s=100&amp;d=blank" alt="Avatar" className="w-full h-full object-cover" />
                                 </div>
                                 <div className="text-gray-800">
-                                  
+
                                     <a href="/account/logout?return_url=%2Fcheckouts%2F8d15bc8be1b04727850a1287ec06d27e%3Fstep%3D1" className="text-blue-500 hover:underline">Đăng xuất</a>
                                 </div>
                             </div>

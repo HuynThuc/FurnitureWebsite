@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 // Hàm tạo đơn hàng và chi tiết đơn hàng
 const createOrder = (req, res) => {
-    const { userId, addressId } = req.body; // userId và addressId được truyền từ frontend
+    const { userId, addressId, paymentMethod } = req.body; // Nhận paymentMethod từ frontend
 
     // Lấy thông tin giỏ hàng và tổng giá
     const sql = `
@@ -28,10 +28,10 @@ const createOrder = (req, res) => {
 
         const total = cartItems[0].total;
 
-        // Tạo đơn hàng mới
+        // Tạo đơn hàng mới với phương thức thanh toán
         db.query(
-            'INSERT INTO `oder` (`address_id`, `user_id`, `order_date`, `total_price`) VALUES (?, ?, ?, ?)',
-            [addressId, userId, Math.floor(Date.now() / 1000), total], // Lưu tổng giá
+            'INSERT INTO `oder` (`address_id`, `user_id`, `order_date`, `total_price`, `paymentMethod`) VALUES (?, ?, ?, ?, ?)',
+            [addressId, userId, Math.floor(Date.now() / 1000), total, paymentMethod], // Lưu tổng giá và phương thức thanh toán
             (err, orderResult) => {
                 if (err) {
                     console.error('Error creating order:', err);
@@ -78,6 +78,7 @@ const createOrder = (req, res) => {
         );
     });
 };
+
 
 
 //Lấy thông tin đơn hàng 
