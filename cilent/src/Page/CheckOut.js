@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import AddressPopup from '../Component/AddressComponent/AddressPopup';
+import Address from './Address';
 import OrderSummary from './OrderSummary';
 import AuthContext from '../Context/AuthContext';
 import axios from 'axios'; // Đảm bảo rằng bạn đã cài đặt axios
@@ -13,19 +14,24 @@ const Checkout = () => {
 
     useEffect(() => {
         // Hàm lấy dữ liệu địa chỉ từ API
-        const fetchAddresses = async () => {
-            try {
-                // Thay đổi URL API này thành URL phù hợp của bạn
-                const response = await axios.get(`http://localhost:3001/api/address/${user.id}`);
-                setAddresses(response.data);
-            } catch (error) {
-                console.error('Error fetching addresses:', error);
-            }
-        };
-
         fetchAddresses();
     }, [user]);
 
+    const fetchAddresses = async () => {
+        try {
+            // Thay đổi URL API này thành URL phù hợp của bạn
+            const response = await axios.get(`http://localhost:3001/api/address/${user.id}`);
+            setAddresses(response.data);
+        } catch (error) {
+            console.error('Error fetching addresses:', error);
+        }
+    };
+
+
+
+
+
+    //Nếu giá trị là 0 thì hiện popup
     const handleSelectChange = (e) => {
         setSelectedAddress(e.target.value);
         if (e.target.value === '0') {
@@ -56,7 +62,7 @@ const Checkout = () => {
 
             });
              // Kiểm tra phương thức thanh toán đã chọn
-        if (paymentMethod === '1002965974') { // Mã phương thức thanh toán MoMo
+        if (paymentMethod === 'MOMO') { // Mã phương thức thanh toán MoMo
             const paymentResponse = await axios.post('http://localhost:3001/payment', {
               
             });
@@ -183,7 +189,7 @@ const Checkout = () => {
             </div>
 
             {/* Hiển thị AddressPopup nếu showPopup là true */}
-            <AddressPopup showPopup={showPopup} onClose={handleClosePopup} onSubmit={handleSubmitPopup} />
+            <AddressPopup showPopup={showPopup} onClose={handleClosePopup} onSubmit={handleSubmitPopup} fetchAddresses={fetchAddresses} />
 
             {/* Nút Đặt hàng */}
             <div className="flex justify-end mt-6">
