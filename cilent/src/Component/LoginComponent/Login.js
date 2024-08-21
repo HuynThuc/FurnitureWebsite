@@ -30,7 +30,7 @@ const Login = () => {
         setUser(user);
         navigate('/home');
       } else {
-        alert(res.data.Error);
+        alert("Tài khoản hoặc mật khẩu không đúng");
       }
     } catch (err) {
       console.log(err);
