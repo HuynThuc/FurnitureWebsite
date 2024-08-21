@@ -1,168 +1,116 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-
-
-
 .login-container {
-  display: flex;
-  justify-content: center; /* Căn giữa theo chiều ngang */
-    align-items: center; /* Căn giữa theo chiều dọc */
-    max-width: 360px; /* Giảm kích thước tối đa */
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Giảm độ bóng */
+  max-width: 400px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .login-container h1 {
-    margin-bottom: 20px;
-    font-size: 28px; /* Giảm kích thước tiêu đề */
-    color: #555;
-    text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #555;
+  text-align: center;
 }
 
 .form-group {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
 }
 
+.input-with-icon {
+  position: relative;
+}
 
+.input-with-icon .icon {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 10px 10px 10px 35px; /* Adjust padding to accommodate icon */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+.input-with-icon input:focus {
+  border-color: #888;
+  outline: none;
+}
 
 .btn-primary {
-    width: 100%;
-    padding: 12px; /* Tăng padding cho nút */
-    background-color: #ffcc00;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  width: 100%;
+  padding: 10px;
+  background-color: #ffcc00;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #FF9900;
+  background-color: #FF9900;
 }
 
 .login-container p {
-    color: #333;
-    font-size: 14px; /* Giảm kích thước chữ */
+  color: #333;
 }
 
 .login-container p a {
-    text-decoration: none;
-    color: #ffcc00;
-    font-weight: 600;
+  text-decoration: none;
+  color: #ffcc00;
+  font-weight: 600;
 }
 
 .login-container p a:hover {
-    color: #FF9900;
+  color: #FF9900;
 }
 
 .remember-forgot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
 }
 
 .remember-forgot label {
-    color: #555;
-    margin-right: 20px;
-    font-size: 14px; /* Giảm kích thước chữ */
+  color: #555;
+  margin-right: 20px;
 }
 
 .remember-forgot a {
-    margin-left: auto;
-    color: #555;
-    text-decoration: none;
-    font-size: 14px; /* Giảm kích thước chữ */
+  margin-left: auto;
+  color: #555;
+  text-decoration: none;
 }
 
-.back-to-home-link {
-    font-size: 14px; /* Giảm kích thước chữ */
-    text-align: center;
-    margin: 20px 0 15px;
+.back-to-home-login-link {
+  font-size: 14.5px;
+  text-align: center;
+  margin: 20px 0 15px;
 }
 
-.back-to-home-link a {
-    color: #555;
-    text-decoration: none;
-    font-weight: 600;
+.back-to-home-login-link a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-.back-to-home-link .icon {
-    margin-right: 8px;
-    color: #555;
+.back-to-home-login-link .icon {
+  margin-right: 8px;
+  color: #555   ;
 }
-
-.input-box {
-  position: relative; /* Để biểu tượng có thể được định vị chính xác */
-  margin-bottom: 15px; /* Khoảng cách giữa các ô input */
-}
-
-.input-box input {
-  width: 100%; /* Chiếm toàn bộ chiều rộng của khối chứa */
-  padding: 12px 15px 12px 40px; /* Padding cho input, đủ để chứa biểu tượng bên trái */
-  border: 2px solid #ddd; /* Đường viền cho input */
-  border-radius: 8px; /* Bo góc cho input */
-  font-size: 16px; /* Kích thước chữ */
-  color: #333; /* Màu chữ */
-  background-color: #f9f9f9; /* Màu nền của input */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp */
-  box-sizing: border-box; /* Đảm bảo padding không làm thay đổi kích thước tổng thể */
-}
-
-.input-box input::placeholder {
-  color: #888; /* Màu chữ của placeholder */
-}
-
-.input-box input:focus {
-  border-color: #ffcc00; /* Màu viền khi input được focus */
-  box-shadow: 0 0 8px rgba(255, 204, 0, 0.5); /* Hiệu ứng bóng khi focus */
-  outline: none; /* Xóa outline mặc định */
-}
-
-.input-box .icon {
-  position: absolute; /* Định vị biểu tượng ở vị trí chính xác */
-  top: 50%;
-  left: 12px; /* Khoảng cách từ trái */
-  transform: translateY(-50%); /* Căn giữa theo chiều dọc */
-  font-size: 20px; /* Kích thước biểu tượng */
-  color: #888; /* Màu của biểu tượng */
-  pointer-events: none; /* Đảm bảo biểu tượng không cản trở sự tương tác với input */
-}
-.btn-primary {
-  width: 100%; /* Chiếm toàn bộ chiều rộng của khối chứa */
-  padding: 12px; /* Padding bên trong nút */
-  background-color: #0e0e0e; /* Màu nền của nút */
-  color: #fff; /* Màu chữ */
-  border: none; /* Xóa đường viền mặc định */
-  border-radius: 8px; /* Bo góc cho nút */
-  font-size: 16px; /* Kích thước chữ */
-  font-weight: 600; /* Độ đậm chữ */
-  cursor: pointer; /* Hiển thị con trỏ tay khi di chuột qua nút */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp khi thay đổi thuộc tính */
-  outline: none; /* Xóa outline mặc định */
-}
-
-.btn-primary:hover {
-  background-color: #665555; /* Màu nền khi di chuột qua nút */
-}
-
-
-
-.btn-primary:focus {
-  box-shadow: 0 0 0 3px rgba(255, 204, 0, 0.5); /* Hiệu ứng bóng khi nút được focus */
-}
-
-
-
-

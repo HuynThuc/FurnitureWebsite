@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { setToken, decodeToken, AuthContext } from '../../Context/AuthContext';
 import '../LoginComponent/LoginStyle.css';
 
-const Login = () => {
+const Login = ({toggleLogin}) => {
   const [values, setValues] = useState({
     
     name: '',
@@ -28,7 +28,8 @@ const Login = () => {
         const user = decodeToken(res.data.Token);
         //lưu thông tin user
         setUser(user);
-        navigate('/home');
+        toggleLogin();
+        navigate('/');
       } else {
         alert("Tài khoản hoặc mật khẩu không đúng");
       }
@@ -39,12 +40,12 @@ const Login = () => {
 
   return (
     <div className='login-container'>
-    <div className='body-login'>
-      <div className='wrapper'>
+      <h1>Welcome Back!</h1>
         <form action="" onSubmit={handleSubmit}>
+        <div className="form-group">
           <h1>Login</h1>
           <p>Nhập email và mật khẩu của bạn</p>
-          <div className="input-box">
+          <div className="input-with-icon">
             <input type="text" 
               id="username" 
               name="username"
@@ -53,9 +54,10 @@ const Login = () => {
             
             <FaUser className='icon' />
           </div>
+        </div>
 
-
-          <div className="input-box">
+        <div className="form-group">
+          <div className="input-with-icon">
             <input type="password"
               id="password" 
               name="password"
@@ -63,6 +65,7 @@ const Login = () => {
             onChange={e => setValues({...values, password: e.target.value})} />
             <FaLock className='icon' />
           </div>
+        </div>
 
           <div className="remember-forgot">
             <label><input type="checkbox" />Remember me</label>
@@ -70,19 +73,15 @@ const Login = () => {
           </div>
 
           <button type="submit" className="btn-primary">Login</button>
-
-
-          <div className="register-link">
-            <p>Don't have an account ? <a href="/register">Register</a></p>
-          </div>
         </form>
-        <div className="back-to-home-link">
-          <FaArrowLeft className="icon" />
-          <a href="/">Back To Home</a>
-        </div>
+
+        <p>Don't have an account ? <a href="/Signup">Sign Up</a></p>
+      <div className="back-to-home-login-link">
+        <FaArrowLeft className="icon" />
+        <a href="/">Back To Home</a>
       </div>
-    </div>
-  </div>
+      </div>
+   
   );
 }
 

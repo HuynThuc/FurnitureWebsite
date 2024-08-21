@@ -4,7 +4,7 @@ import '../HeaderComponent/HeaderStyle.css';
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { FiShoppingBag } from "react-icons/fi";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faUser, faAngleDown } from '@fortawesome/free-solid-svg-icons'; 
+import { faTimes, faUser, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import Login from '../LoginComponent/Login';
 import AuthContext from '../../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -16,21 +16,34 @@ const Header = () => {
   const [isFourthDropdownOpen, setIsFourthDropdownOpen] = useState(false);
   const navigate = useNavigate();
   const [loginOpen, setLoginOpen] = useState(false);
-
-  const toggleLogin = () => setLoginOpen(!loginOpen);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const { user, setUser } = useContext(AuthContext);
-
   const handleMouseEnter = (setter) => () => setter(true);
   const handleMouseLeave = (setter) => () => setter(false);
 
+
+  const toggleLogin = () => {
+    setLoginOpen(!loginOpen);
+
+  }
   const handleUserClick = () => {
     if (user) {
-        setUserMenuOpen(!userMenuOpen);
+      setUserMenuOpen(!userMenuOpen);
     } else {
-        toggleLogin();
+      toggleLogin();
     }
   };
+
+  const handleNavigation = (path) => {
+    if (loginOpen) {
+      setLoginOpen(false); // Đóng popup login nếu đang mở
+    }
+    if (userMenuOpen) {
+      setUserMenuOpen(false); // Đóng user menu nếu đang mở
+    }
+    navigate(path); // Chuyển hướng đến đường dẫn được chỉ định
+  };
+  
 
   const handleLogout = () => {
     setUser(null);
@@ -65,7 +78,7 @@ const Header = () => {
               </div>
             </li>
             <li><a href="/bo-suu-tap-moi">Bộ Sưu Tập Mới</a></li>
-           
+
             <li className="dropdown" onMouseEnter={handleMouseEnter(setIsFourthDropdownOpen)} onMouseLeave={handleMouseLeave(setIsFourthDropdownOpen)}>
               <a href="/khuyen-mai">Khuyến Mãi</a>
               <div className="dropdown-icon">
@@ -108,7 +121,7 @@ const Header = () => {
                 </>
               ) : (
                 <>
-                  Đăng nhập / Đăng ký 
+                  Đăng nhập / Đăng ký
                   <span className="txtAcount">Tài khoản của tôi<FontAwesomeIcon icon={faAngleDown} aria-hidden="true" /></span>
                 </>
               )}
@@ -122,7 +135,7 @@ const Header = () => {
               <button className="close-button" onClick={toggleLogin}>
                 <FontAwesomeIcon icon={faTimes} />
               </button>
-              <Login />
+              <Login toggleLogin={toggleLogin}/>
             </div>
             <div className="overlay open" onClick={toggleLogin}></div>
           </>
@@ -133,8 +146,11 @@ const Header = () => {
               <div className="user-menu-container">
                 <p>Welcome, {user.roleId}!</p>
                 <ul className="user-menu-list">
-                  <li onClick={() => navigate('/account')}>Profile</li>
-                  <li onClick={() => navigate('/settings')}>Settings</li>
+                  <li onClick={() => {
+                   
+                   handleNavigation('/account');
+                  }}>Profile</li>
+                  <li onClick={() => handleNavigation('/settings')}>Settings</li>
                   {user.roleId === 1 && <li onClick={() => navigate('/admin-2')}>Admin</li>}
                   <li onClick={handleLogout}>Logout</li>
                 </ul>
