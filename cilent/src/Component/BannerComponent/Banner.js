@@ -2,7 +2,7 @@ import React from 'react';
 
 const Banner = () => {
   return (
-    <div className="relative p-6 mx-auto">
+    <div className="relative p-6 mx-auto ">
       <div className="text-center mb-6">
         <h2 className="text-3xl font-semibold">Không Gian Sống Với MOHO</h2>
       </div>

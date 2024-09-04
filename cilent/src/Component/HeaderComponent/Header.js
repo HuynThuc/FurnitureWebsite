@@ -7,17 +7,17 @@
   import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
   import { faTimes, faUser, faAngleDown } from '@fortawesome/free-solid-svg-icons';
   import Login from '../LoginComponent/Login';
+  import Cart from '../../Page/Cart';
   import AuthContext from '../../Context/AuthContext';
   import { useNavigate, Link } from 'react-router-dom';
 
   const Header = () => {
-    const [isFirstDropdownOpen, setIsFirstDropdownOpen] = useState(false);
-    const [isSecondDropdownOpen, setIsSecondDropdownOpen] = useState(false);
+   
     const [isThirdDropdownOpen, setIsThirdDropdownOpen] = useState(false);
-    const [isFourthDropdownOpen, setIsFourthDropdownOpen] = useState(false);
     const navigate = useNavigate();
     const [loginOpen, setLoginOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
+    const [cartOpen, setCartOpen] = useState(false); // State to manage Cart popup
     const [category, setCategories] = useState([]);
     const { user, setUser } = useContext(AuthContext);
     const handleMouseEnter = (setter) => () => setter(true);
@@ -28,6 +28,10 @@
       setLoginOpen(!loginOpen);
 
     }
+
+    const toggleCart = () => {
+      setCartOpen(!cartOpen); // Toggle Cart popup
+  };
     const handleUserClick = () => {
       if (user) {
         setUserMenuOpen(!userMenuOpen);
@@ -131,7 +135,7 @@
               <svg
                 className="h-6 w-6 hover:text-gray-200"
                 fill="none"
-                stroke="currentColor"
+                stroke="currentColor" 
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -143,9 +147,9 @@
                 />
               </svg>
             </button>
-            <a
+            <button
               className="flex items-center hover:text-gray-200"
-              href="/cart"
+              onClick={toggleCart} // Toggle Cart popup
             >
               <svg
                 className="h-6 w-6"
@@ -167,7 +171,7 @@
                 </span>
               </span>
               
-            </a>
+            </button>
            
           </div>
         </div>
@@ -183,6 +187,9 @@
               <div className="overlay open" onClick={toggleLogin}></div>
             </>
           )}
+
+          
+        
           {userMenuOpen && (
             <>
               <div  className="absolute top-[60px] right-[205px] w-[170px] bg-white border rounded shadow-xl z-50"
@@ -209,6 +216,10 @@
               </div>
             </>
           )}
+          <Cart cartOpen={cartOpen} onClose={toggleCart}  />
+
+
+          
       </nav>
     </section>
       </div>

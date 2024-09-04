@@ -106,7 +106,8 @@ const incrementQuantity = async (cart_item_id) => {
         total,
         handleRemoveItem,
         decrementQuantity,
-        incrementQuantity
+        incrementQuantity,
+        getCartItems
 
 
       
