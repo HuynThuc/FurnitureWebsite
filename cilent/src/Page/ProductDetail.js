@@ -63,7 +63,7 @@ const ProductDetail = () => {
                 <img src={`/images/${product.anh}`} alt="Product" className="card-detail-image" />
                 <div className="card-detail-content">
                     <h2 className="card-detail-title">{product.ten_sanpham}</h2>
-                    <p className="card-detail-price">Giá: {product.gia}</p>
+                    <p className="card-detail-price">Giá: {product.gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
                     <p className="card-detail-description">{parse(product.mo_ta)}</p>
                     <div className="quantity-control">
                         <button onClick={decreaseQuantity}>-</button>

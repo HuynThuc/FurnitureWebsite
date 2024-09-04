@@ -490,9 +490,9 @@
 
 .user-menu {
   position: absolute;
-  top: 80px; /* Điều chỉnh khoảng cách từ icon đến menu */
-  right: 70px; /* Menu nằm ngay dưới icon */
-  width: 200px;
+  top: 60px; /* Điều chỉnh khoảng cách từ icon đến menu */
+  right: 205px; /* Menu nằm ngay dưới icon */
+  width: 170px;
   background-color: white;
   border: 1px solid #ddd;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -528,6 +528,4 @@
   background: none; /* Loại bỏ màu nền mặc định */
 }
 
-.user-menu-list li:hover {
-  background-color: #f0f0f0;
-}
+

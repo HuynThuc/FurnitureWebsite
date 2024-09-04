@@ -69,10 +69,8 @@ function App() {
               />
               <Route path="/cart" element={<Cart />} />
               <Route path="/productdetail/:id" element={<ProductDetail/>} />
-
               {/* Add the routes for CategoryProduct */}
-              <Route path="/category/kitchen" element={<CategoryProduct categoryId={7} title="Tủ Bếp MOHO 2024" />} />
-              <Route path="/category/table" element={<CategoryProduct categoryId={2} title="Bàn MOHO 2024" />} />
+              <Route path="/category/:categoryId" element={<CategoryProduct />} />
               {/* Add more routes as needed */}
             </Route>
           </Routes>

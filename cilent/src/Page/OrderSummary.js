@@ -15,17 +15,19 @@ const OrderSummary = ({ }) => {
                         <div className="flex items-center space-x-4">
                             <img src={`/images/${item.anh}`} alt={item.name} className="w-16 h-16 object-cover" />
                             <div>
-                                <p className="text-gray-800 font-medium">{item.ten_sanpham}</p>
-                                <p className="text-gray-600">Quantity: {item.quantity}</p>
+                                <p className="text-gray-800 font-medium p-1">{item.ten_sanpham}</p>
+                                <p className="text-gray-600 font-medium p-1">Quantity: {item.quantity}</p>
+                                <p className="text-gray-800 font-medium p-1">Giá: {total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
                             </div>
                         </div>
-                        <p className="text-gray-800 font-medium">${total.toFixed(2)}</p>
+                       
                     </div>
+                    
                 ))}
             </div>
             <div className="mt-4 flex justify-between font-semibold text-lg">
                 <span>Tổng cộng:</span>
-                <span>{total.toFixed(2)}</span>
+                <span>{total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
             </div>
         </div>
     );

@@ -8,8 +8,8 @@ const salt = 10;
 
 //login
 const login = (req, res) => {
-    const sql = "SELECT * FROM user WHERE name = ?";
-    db.query(sql, [req.body.name], (err, data) => {
+    const sql = "SELECT * FROM user WHERE email = ?";
+    db.query(sql, [req.body.email], (err, data) => {
         if (err) {
             return res.json({ Error: "Login error", Details: err.message });
         }
@@ -21,12 +21,13 @@ const login = (req, res) => {
                 if (response) {
                     const id = data[0].id;
                     const name = data[0].name;
+                    const email = data[0].email;
                     const roleId = data[0].role_id;
-                    const token = jwt.sign({ id, name, roleId }, "jwt-secret-key", { expiresIn: '1d' });
+                    const token = jwt.sign({ id, name, email, roleId }, "jwt-secret-key", { expiresIn: '1d' });
                     return res.json({ 
                         Status: "Success", 
                         Token: token, 
-                        User: { id, name, roleId } 
+                        User: { id, name, email, roleId } 
                     });
                 } else {
                     return res.json({ Error: "Password not matched" });
@@ -48,13 +49,14 @@ const signup = (req, res) => {
 
         const roleId = result[0].id;
 
-        const insertUserSql = "INSERT INTO user (name, password, role_id) VALUES (?, ?, ?)";
+        const insertUserSql = "INSERT INTO user (name, email, password, role_id) VALUES (?, ?, ?, ?)";
 
         bcrypt.hash(req.body.password.toString(), salt, (err, hash) => {
             if (err) return res.json({ Error: "Error hashing password" });
 
             const values = [
                 req.body.name,
+                req.body.email,                
                 hash,
                 roleId
             ];

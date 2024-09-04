@@ -35,7 +35,7 @@
     /* Thêm transition cho opacity */
     opacity: 1;
     /* Mặc định hiển thị ảnh */
-    margin-top: 141px;
+    /* margin-top: 141px; */
 }
 
 .slider-image:not(.active) {

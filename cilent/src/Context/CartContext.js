@@ -5,7 +5,7 @@ import { AuthContext } from './AuthContext';
 import { toast } from 'react-toastify'; // Import toast từ react-toastify
 
 const CartContext = createContext();
-
+ 
 const CartProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState([]);

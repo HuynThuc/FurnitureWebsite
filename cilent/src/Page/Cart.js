@@ -24,21 +24,20 @@ const Cart = () => {
             {cartItems.map(item => (
               <div className="cart-item">
                 <img src={`/images/${item.anh}`} alt={item.name} className="cart-item-image" />
-                <span>{item.cart_item_id}</span>
                 <span>{item.ten_sanpham}</span>
-                <span>Quantity: {item.quantity}</span>
+                <span>Số lượng: {item.quantity}</span>
                 <div className="quantity-controls">
                   <button onClick={() => decrementQuantity(item.cart_item_id)}>-</button>
                   <span>{item.quantity}</span>
                   <button onClick={() => incrementQuantity(item.cart_item_id)}>+</button>
                 </div>
-                <span>Price: ${item.gia}</span>
-                <button onClick={() => handleRemoveItem(item.cart_item_id)}>Remove</button>
+                <span>Giá: {item.gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span>
+                <button onClick={() => handleRemoveItem(item.cart_item_id)}>Xóa</button>
               </div>
             ))}
           </div>
           <div className="cart-total">
-          <span>Total: ${total.toFixed(2)}</span> {/* Hiển thị tổng giá trị */}
+          <span>Tổng cộng: {total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span> {/* Hiển thị tổng giá trị */}
             <button className="checkout-button" onClick={handleCheckout}>Thanh toán</button>
           </div>
         </div>

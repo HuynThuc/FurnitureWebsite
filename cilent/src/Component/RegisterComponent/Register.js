@@ -8,6 +8,7 @@ const Register = () => {
 
   const [values, setValues] = useState({
     name: '',
+    email:'',
     password:'',
   })
   const navigate = useNavigate()
@@ -33,12 +34,18 @@ const Register = () => {
           <form action="" onSubmit={handleSubmit} >
             <h1>Register</h1>
             <div className="input-box">
-              <input type="text" placeholder='Username' required 
+              <input type="email" placeholder='Email' required 
+              onChange={e => setValues({...values, email: e.target.value})} />
+              <FaLock className='icon' />
+            </div>
+            <div className="input-box">
+            
+              <input type="text" placeholder='Họ và Tên' required 
               onChange={e => setValues({...values, name: e.target.value})}/>
               <FaUser className='icon' />
             </div>
              <div className="input-box">
-              <input type="password" placeholder='Password' required 
+              <input type="password" placeholder='Mật khẩu' required 
               onChange={e => setValues({...values, password: e.target.value})} />
               <FaLock className='icon' />
             </div>

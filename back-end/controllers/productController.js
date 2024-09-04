@@ -43,7 +43,6 @@ const deleteProduct = (req, res) => {
 };
 
 //Sửa sản phẩm
-
 const updateProduct = (req, res) => {
     const { id } = req.params;
     const { ten_sanpham, mo_ta, gia } = req.body;

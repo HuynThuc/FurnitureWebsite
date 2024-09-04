@@ -1,37 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Slider from '../Component/SliderComponent/Slider';
 
-
-const CategoryProduct = ({ categoryId, title }) => {
+const CategoryProduct = () => {
+    const { categoryId } = useParams(); // Lấy categoryId từ URL
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/products/${categoryId}`)
-            .then(response => {
-                console.log(response.data); // Xem cấu trúc dữ liệu
-                setProducts(response.data);
-            })
-            .catch(error => {
-                console.error(`Error fetching products for category ${categoryId}:`, error);
-            });
+        if (categoryId) {
+            axios.get(`http://localhost:3001/products/${categoryId}`)
+                .then(response => {
+                    console.log(response.data); // Xem cấu trúc dữ liệu
+                    setProducts(response.data);
+                })
+                .catch(error => {
+                    console.error(`Error fetching products for category ${categoryId}:`, error);
+                });
+        }
     }, [categoryId]);
 
     return (
         <div className="text-center">
-            <Slider/>
+            <Slider />
             <div className="text-center mb-10">
-                <h1 className="font-bold text-4xl mb-4">{title}</h1>
+                
             </div>
-            <section
-                className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5"
-            >
+            <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
                 {products.map(product => (
-                    <div
-                        key={product.id}
-                        className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
-                    >
+                    <div key={product.id} className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                         <Link to={`/productdetail/${product.id}`}>
                             <img
                                 src={`/images/${product.anh}`}
@@ -42,10 +39,8 @@ const CategoryProduct = ({ categoryId, title }) => {
                                 <span className="text-gray-400 mr-3 uppercase text-xs">Brand</span>
                                 <p className="text-lg font-bold text-black truncate block capitalize">{product.ten_sanpham}</p>
                                 <div className="flex items-center">
-                                    <p className="text-lg font-semibold text-black my-3">${product.gia}</p>
-                                    <del>
-                                        <p className="text-sm text-gray-600 ml-2">$199</p>
-                                    </del>
+                                    <p className="text-lg font-semibold text-black my-3">{product.gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
+                                
                                     <div className="ml-auto">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
                                             <path fillRule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z" />

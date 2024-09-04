@@ -17,8 +17,8 @@ const Profile = () => {
                 id="email"
                 name="customer[email]"
                 className="p-2 border border-gray-300 rounded-md"
-                value="sieunhangao0985@gmail.com"
-                disabled
+                defaultValue={user?.email || ''}  // Sử dụng thông tin từ user
+                required
               />
             </div>
             <div className="flex flex-col">
@@ -28,54 +28,14 @@ const Profile = () => {
                 id="last_name"
                 name="customer[last_name]"
                 className="p-2 border border-gray-300 rounded-md"
-                placeholder="Huỳnh"
+               
                 defaultValue={user?.name || ''}  // Sử dụng thông tin từ user
                 required
               />
             </div>
-            <div className="flex flex-col">
-              <label htmlFor="first_name" className="font-medium">Tên</label>
-              <input
-                type="text"
-                id="first_name"
-                name="customer[first_name]"
-                className="p-2 border border-gray-300 rounded-md"
-                placeholder="Thức"
-                defaultValue="Thức"
-                required
-              />
-            </div>
-            <div className="flex flex-col">
-              <label className="font-medium">Giới tính</label>
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  id="radio0"
-                  name="customer[gender]"
-                  value="0"
-                  className="mr-2"
-                />
-                <label htmlFor="radio0">Nữ</label>
-                <input
-                  type="radio"
-                  id="radio1"
-                  name="customer[gender]"
-                  value="1"
-                  className="ml-4 mr-2"
-                />
-                <label htmlFor="radio1">Nam</label>
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <label htmlFor="birthday" className="font-medium">Ngày sinh</label>
-              <input
-                type="text"
-                id="birthday"
-                name="customer[birthday]"
-                className="p-2 border border-gray-300 rounded-md"
-                placeholder="mm/dd/yyyy"
-              />
-            </div>
+          
+           
+            
             <div className="mt-4">
               <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
                 Cập nhật

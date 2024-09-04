@@ -8,7 +8,8 @@ import '../LoginComponent/LoginStyle.css';
 const Login = ({toggleLogin}) => {
   const [values, setValues] = useState({
     
-    name: '',
+ 
+    email:'',
     password: ''
   });
   const navigate = useNavigate();
@@ -47,10 +48,10 @@ const Login = ({toggleLogin}) => {
           <p>Nhập email và mật khẩu của bạn</p>
           <div className="input-with-icon">
             <input type="text" 
-              id="username" 
-              name="username"
+              id="email" 
+              name="email"
               placeholder='Username' required 
-            onChange={e => setValues({...values, name: e.target.value})}/>
+            onChange={e => setValues({...values, email: e.target.value})}/>
             
             <FaUser className='icon' />
           </div>
@@ -75,7 +76,7 @@ const Login = ({toggleLogin}) => {
           <button type="submit" className="btn-primary">Login</button>
         </form>
 
-        <p>Don't have an account ? <a href="/Signup">Sign Up</a></p>
+        <p>Don't have an account ? <a href="/register">Sign Up</a></p>
       <div className="back-to-home-login-link">
         <FaArrowLeft className="icon" />
         <a href="/">Back To Home</a>

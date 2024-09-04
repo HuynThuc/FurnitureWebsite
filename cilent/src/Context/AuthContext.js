@@ -16,16 +16,24 @@ export const fetchToken = () => {
 
 
 //giải mã token
+// Hàm giải mã token
 export const decodeToken = (token) => {
     try {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        return JSON.parse(atob(base64));
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split('')
+                .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                .join('')
+        );
+        return JSON.parse(jsonPayload);
     } catch (error) {
         console.error('Error decoding token:', error);
         return null;
     }
-}
+};
+
 
 
 //useEffect Khi AuthProvider được tải lên, nó sẽ kiểm tra xem có token nào được lưu trong localStorage không (sử dụng fetchToken).
