@@ -1,63 +1,28 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import sliderImage1 from '../../images/slideshow_1_master.webp';
-import sliderImage2 from '../../images/slideshow_2.webp';
-import sliderImage3 from '../../images/slideshow_3.webp';
-import sliderImage4 from '../../images/slideshow_4.webp';
-import sliderImage5 from '../../images/slideshow_5.webp';
-import sliderImage6 from '../../images/slideshow_6.webp';
-import sliderImage7 from '../../images/slideshow_7.webp';
+
 import '../SliderComponent/SliderStyle.css';
 
-const Slider = () => {
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [direction, setDirection] = useState('next');
-
-    const sliderImages = useMemo(() => [
-        sliderImage1,
-        sliderImage2,
-        sliderImage3,
-        sliderImage4,
-        sliderImage5,
-        sliderImage6,
-        sliderImage7
-    ], []);
-
-    const prevImage = () => {
-        setDirection('prev');
-        const newIndex = (currentImageIndex - 1 + sliderImages.length) % sliderImages.length;
-        setCurrentImageIndex(newIndex);
-    };
-
-    const nextImage = useCallback(() => {
-        setDirection('next');
-        const newIndex = (currentImageIndex + 1) % sliderImages.length;
-        setCurrentImageIndex(newIndex);
-    }, [currentImageIndex, sliderImages]);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            nextImage();
-        }, 5000);
-
-        return () => clearInterval(interval);
-    }, [currentImageIndex, nextImage]);
+const Slider = ({image, title}) => {
+    
 
     return (
-        <div className="header__slider">
-            {sliderImages.map((image, index) => (
-                <div key={index} className="slider-image-container">
-                    {index === currentImageIndex && (
-                        <img
-                            src={image}
-                            alt={`Slider ${index}`}
-                            className={`slider-image ${direction} active`}
-                        />
-                    )}
-                </div>
-            ))}
-            <button className="slider-button prev" onClick={prevImage}>&#10229;</button>
-            <button className="slider-button next" onClick={nextImage}>&#10230;</button>
+        <div class="relative font-sans before:absolute before:w-full before:h-full before:inset-0 before:bg-black before:opacity-50 before:z-10">
+         <img src={`/images/${image}`} alt="Banner Image" class="absolute inset-0 w-full h-full object-cover" />
+        <div class="min-h-[500px] relative z-50 h-full max-w-6xl mx-auto flex flex-col justify-center items-center text-center text-white p-6">
         </div>
+        <div class="absolute bottom-12 left-64 z-50 text-white">
+            <h1 class="shop-page-title is-xlarge pb-2 ">{title}</h1>
+            <div class="is-small">
+              <nav class="woocommerce-breadcrumb breadcrumbs">
+                <a href="https://nhaxinh.com">Trang chủ</a>
+                <span class="divider"> / </span>
+                <a href="https://nhaxinh.com/danh-muc/phong-an/">Phòng ăn</a>
+                <span class="divider"> / </span>Bàn ăn
+              </nav>
+            </div>
+          </div>
+      </div>
+      
     );
 };
 

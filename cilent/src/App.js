@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Routes, Route, Outlet, useLocation } from 'rea
 import Login from './Component/LoginComponent/Login';
 import Register from './Component/RegisterComponent/Register';
 import AboutUs from './routes/AboutUs';
-import Showroom from './routes/Showroom';
+
 import Profile from './Page/Profile';
 
 
@@ -51,7 +51,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/about-us" element={<AboutUs />} /> 
-              <Route path="/show-room" element={<Showroom />} />
+              
               <Route path="/check-out" element={<CheckOut/>}/>
               <Route path="/account" element={<ProfileTab />}>
               

@@ -6,6 +6,9 @@ import Slider from '../Component/SliderComponent/Slider';
 const CategoryProduct = () => {
     const { categoryId } = useParams(); // Lấy categoryId từ URL
     const [products, setProducts] = useState([]);
+    const [banner, setBanner] = useState(""); // Khởi tạo với chuỗi rỗng
+    const [categoryName, setCategoryName] = useState(""); // Khởi tạo với chuỗi rỗng
+
 
     useEffect(() => {
         if (categoryId) {
@@ -13,6 +16,10 @@ const CategoryProduct = () => {
                 .then(response => {
                     console.log(response.data); // Xem cấu trúc dữ liệu
                     setProducts(response.data);
+                    setBanner(response.data[0].banner);
+                    setCategoryName(response.data[0].ten_loaisp);
+                
+                    
                 })
                 .catch(error => {
                     console.error(`Error fetching products for category ${categoryId}:`, error);
@@ -22,7 +29,7 @@ const CategoryProduct = () => {
 
     return (
         <div className="text-center">
-            <Slider />
+          <Slider image={banner} title={categoryName} />
             <div className="text-center mb-10">
                 
             </div>

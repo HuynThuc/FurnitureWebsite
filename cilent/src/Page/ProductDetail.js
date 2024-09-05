@@ -64,7 +64,7 @@ const ProductDetail = () => {
                     <div className="w-full md:w-1/2 px-4 mb-8">
                         <img
                             alt="Product"
-                            className="w-full h-auto rounded-lg shadow-md mb-4"
+                            className="w-full h-[500px] rounded-lg shadow-md mb-4"
                             id="mainImage"
                             src={`/images/${product.anh}`}
                         />

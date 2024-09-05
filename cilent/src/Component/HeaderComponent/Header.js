@@ -207,7 +207,7 @@
                     className="transition-colors duration-200 block p-2 py-2 text-normal text-gray-900 rounded hover:bg-purple-500 hover:text-white" 
                     onClick={() => handleNavigation('/account/address')}>Danh sách địa chỉ</li>
                     
-                    {user.roleId === 1 && <li onClick={() => navigate('/admin-2')}>Admin</li>}
+                    {user.roleId === 1 && <li className="transition-colors duration-200 block p-2 py-2 text-normal text-gray-900 rounded hover:bg-purple-500 hover:text-white" onClick={() => navigate('/admin-2')}>Admin</li>}
                     <li
                     className="transition-colors duration-200 block p-2 py-2 text-normal text-gray-900 rounded hover:bg-purple-500 hover:text-white" 
                     onClick={handleLogout}>Đăng xuất</li>

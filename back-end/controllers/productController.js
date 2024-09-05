@@ -114,7 +114,7 @@ const getProductById = (req, res) => {
 const getProductsByCategory = (req, res) => {
     const categoryId = req.params.categoryId;
     const sql = `
-        SELECT sp.*, b.banner
+        SELECT sp.*, b.banner, b.ten_loaisp
         FROM sanpham sp
         JOIN loaisp b ON sp.id_loaisanpham = b.id_loaisanpham
         WHERE sp.id_loaisanpham = ?;
