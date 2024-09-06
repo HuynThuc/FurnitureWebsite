@@ -141,6 +141,28 @@ const getCategory = (req, res) => {
 }
 
 
+const deleteCategory = (req, res) => {
+    const { id } = req.params;
+
+    // Kiểm tra xem id_sanpham có tồn tại không
+    if (!id) {
+        return res.status(400).json({ Error: "Thiếu id loại sản phẩm" });
+    }
+
+    db.query("DELETE FROM loaisp WHERE id_loaisanpham = ?", [id], (err, result) => {
+        if (err) {
+            console.error('Error deleting cart item:', err);
+            res.status(500).json({ error: "Internal server error" });
+        } else {
+            if (result.affectedRows > 0) {
+                res.json({ message: " deleted successfully" });
+            } else {
+                res.status(404).json({ error: " not found" });
+            }
+        }
+    });
+};
+
 module.exports = {
     createProduct,
     getProducts,
@@ -149,5 +171,6 @@ module.exports = {
     getCategory,
     addCategory,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    deleteCategory
 };

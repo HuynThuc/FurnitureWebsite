@@ -4,7 +4,8 @@ const { createProduct,
         getProducts,
         getProductById,
         getProductsByCategory,
-        getCategory, addCategory, deleteProduct, updateProduct} = require('../controllers/productController');
+        getCategory, addCategory, deleteProduct, updateProduct, 
+deleteCategory} = require('../controllers/productController');
 const upload = require('../middleware/multerConfig');
 const router = express.Router();
 
@@ -16,6 +17,7 @@ router.get('/products', getProducts);
 router.get('/products/:categoryId', getProductsByCategory);
 router.get('/product/:id', getProductById);
 router.get('/categories',getCategory);
+router.delete('/deleteCategory/:id',deleteCategory);
 // Các route khác như getProducts, getProductById, deleteProduct, v.v.
 
 module.exports = router;

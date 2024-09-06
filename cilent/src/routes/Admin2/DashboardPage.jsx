@@ -5,7 +5,8 @@ import { EditOutlined, DeleteOutlined, UploadOutlined } from '@ant-design/icons'
 import { Avatar, Breadcrumb, Layout, Menu, Typography, theme, Table, Modal, Form, Input, Button, Select, Upload, message } from 'antd';
 import AdminImage from '../../images/logo-moho.webp';
 import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+import 'react-quill/dist/quill.snow.css';
+import parse from 'html-react-parser'; // Import Quill styles
 
 import '../Admin2/DashboardPage.css';
 
@@ -61,20 +62,6 @@ const userData = [
 
 
 
-const orderData = [
-    {
-        key: '1',
-        orderId: '1234',
-        customer: 'Mike',
-        total: '$1200'
-    },
-    {
-        key: '2',
-        orderId: '5678',
-        customer: 'John',
-        total: '$800'
-    },
-];
 
 
 const DashboardPage = () => {
@@ -97,28 +84,47 @@ const DashboardPage = () => {
 
 
 
-    //Lấy sản phẩm
+//Lấy sản  phẩm
+    const fetchProduct = async () => {
+        try {
+            const response = await axios.get('http://localhost:3001/products'); // Gọi API để lấy sản phẩm
+            setProducts(response.data); // Cập nhật state với dữ liệu sản phẩm
+        } catch (error) {
+            console.error('Error fetching products:', error);
+        }
+    };   
     useEffect(() => {
-        axios.get('http://localhost:3001/products') // Gọi API để chỉ lấy sản phẩm 
-            .then(response => {
-                //products sẽ nơi lưu thông tin
-                setProducts(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching kitchen products:', error);
-            });
+        fetchProduct();
     }, []);
-
+    
+    //Lấy loại sản  phẩm
+    const fetchCategory = async () => {
+        try {
+            const response = await axios.get('http://localhost:3001/categories')
+            setCategories(response.data);
+        } catch(error){
+            console.error('Error fetching category:', error);
+   
+        }
+           
+    }
     // Lấy loại sản phẩm
     useEffect(() => {
-        axios.get('http://localhost:3001/categories')
-            .then(response => {
-                setCategories(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching kitchen products:', error);
-            });
+      fetchCategory();
     }, []);
+
+    //Xóa loại sản phẩm
+    const deleteCategory = async (categoryId) => {
+        try {
+            const response = await axios.delete(`http://localhost:3001/deleteCategory/${categoryId}`);
+            console.log(response.data); // Xem phản hồi từ server
+            if (response.status === 200) {
+               fetchCategory();
+              }
+        } catch (error) {
+            console.error('Error deleting product:', error.response ? error.response.data : error.message);
+        }
+    };
 
     useEffect(() => {
         axios.get('http://localhost:3001/getOrder')
@@ -135,6 +141,9 @@ const DashboardPage = () => {
         try {
             const response = await axios.delete(`http://localhost:3001/deleteProduct/${productId}`);
             console.log(response.data); // Xem phản hồi từ server
+            if (response.status === 200) {
+                fetchProduct(); 
+              }
         } catch (error) {
             console.error('Error deleting product:', error.response ? error.response.data : error.message);
         }
@@ -150,6 +159,7 @@ const DashboardPage = () => {
             .then(response => {
                 // Xử lý khi request thành công
                 console.log('Thêm loại sản phẩm thành công:', response.data);
+                fetchCategory();
                 // Cập nhật state hoặc thực hiện các hành động khác sau khi thêm thành công
             })
             .catch(error => {
@@ -168,24 +178,21 @@ const DashboardPage = () => {
             .then(response => {
                 // Xử lý khi thêm sản phẩm thành công
                 console.log('Product added successfully:', response.data);
+                fetchProduct();
+               
                 // Cập nhật danh sách sản phẩm hoặc thực hiện các hành động khác sau khi thêm sản phẩm thành công
             })
             .catch(error => {
                 // Xử lý khi có lỗi xảy ra
                 console.error('Error adding product:', error);
             });
-
-
     };
-   
-
     //nút edit
     const handleEdit = (record) => {
         setRecordToEdit(record);
         form.setFieldsValue(record);
         setEditModalVisible(true);
     };
-
     //nút xóa
     const handleDelete = (record) => {
         setRecordToDelete(record);
@@ -236,6 +243,10 @@ const DashboardPage = () => {
                 }
 
                 addProduct(productData);
+                fetchProduct();
+               
+               
+              
             } else if (selectedMenuKey === 'sub2-2') {
                 const categoryData = new FormData();
                 categoryData.append('ten_loaisp', values.ten_loaisp);
@@ -246,8 +257,11 @@ const DashboardPage = () => {
                     return;
                 }
                 addCategory(categoryData);
+                fetchCategory();
             }
             setAddModalVisible(false);
+            
+            
         }).catch(info => {
             console.log('Validate Failed:', info);
         });
@@ -255,8 +269,30 @@ const DashboardPage = () => {
     //Nút ok khi xóa
     const handleDeleteModalOk = () => {
         if (recordToDelete) {
-            deleteProduct(recordToDelete.id); // Gọi hàm xóa với ID sản phẩm cần xóa
+                try {
+                   
+                    // Xóa dữ liệu từ server
+                    switch (selectedMenuKey) {
+                        case 'sub2-1':
+                            deleteProduct(recordToDelete.id);
+                            
+                             // Xóa người dùng
+                            break;
+                            case 'sub2-2':
+                            deleteCategory(recordToDelete.id_loaisanpham);
+                            
+                             // Xóa người dùng
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (error) {
+                    console.error('Error deleting data:', error);
+                }
+            setDeleteModalVisible(false);
+            
         }
+        
     };
     //Nút cancel
     const handleModalCancel = () => {
@@ -266,10 +302,12 @@ const DashboardPage = () => {
     };
 
 
-    //Hàm lưu dữ liệu datasource
     const handleMenuClick = ({ key }) => {
         setSelectedMenuKey(key);
-        switch (key) {
+    };
+    //Hàm lưu dữ liệu datasource
+    useEffect(()=> { 
+        switch (selectedMenuKey) {
             case 'sub1':
                 setDataSource(userData);
                 break;
@@ -285,7 +323,7 @@ const DashboardPage = () => {
             default:
                 break;
         }
-    };
+    }, [selectedMenuKey, userData, category, products, order]);
 
     const handleAddNewRecord = () => {
         setAddModalVisible(true);
@@ -336,7 +374,15 @@ const DashboardPage = () => {
             title: 'Mô tả',
             dataIndex: 'mo_ta',
             key: 'mo_ta',
+            width: 300,
+            render: (text) => {
+                if (typeof text === 'string') {
+                    return parse(text); // Chuyển đổi HTML thành các phần tử React
+                }
+                return <span>{text}</span>; // Hoặc giá trị thay thế nếu không phải chuỗi
+            },
         },
+          
         {
             title: 'Giá',
             dataIndex: 'gia',
@@ -352,7 +398,7 @@ const DashboardPage = () => {
             dataIndex: 'anh',
             key: 'anh',
             render: (text, record) => (
-                <img src={`/moho/public/images/${record.anh}`} alt={record.ten_sanpham} style={{ maxWidth: '100px' }} />
+                <img src={`/images/${record.anh}`} alt={record.ten_sanpham} style={{ maxWidth: '100px' }} />
 
             ),
         },
@@ -385,7 +431,7 @@ const DashboardPage = () => {
             dataIndex: 'banner',
             key: 'banner',
             render: (text, record) => (
-                <img src={`/moho/public/images/${record.banner}`} alt={record.ten_loaisp} style={{ maxWidth: '100px' }} />
+                <img src={`images/${record.banner}`} alt={record.ten_loaisp} style={{ maxWidth: '100px' }} />
 
             ),
         },
@@ -497,6 +543,7 @@ const DashboardPage = () => {
                         <Table
                             dataSource={dataSource}
                             columns={getColumns()}
+                                
                             pagination={false}
                             rowSelection={{
                                 type: 'checkbox',
