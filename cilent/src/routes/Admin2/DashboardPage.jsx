@@ -370,19 +370,7 @@ const DashboardPage = () => {
             dataIndex: 'ten_sanpham',
             key: 'ten_sanpham',
         },
-        {
-            title: 'Mô tả',
-            dataIndex: 'mo_ta',
-            key: 'mo_ta',
-            width: 300,
-            render: (text) => {
-                if (typeof text === 'string') {
-                    return parse(text); // Chuyển đổi HTML thành các phần tử React
-                }
-                return <span>{text}</span>; // Hoặc giá trị thay thế nếu không phải chuỗi
-            },
-        },
-          
+       
         {
             title: 'Giá',
             dataIndex: 'gia',

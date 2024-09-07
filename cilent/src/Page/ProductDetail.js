@@ -59,27 +59,16 @@ const ProductDetail = () => {
 
     return (
         <div className="bg-gray-100">
-            <div className="max-w-[1200px] mx-auto px-4 py-8">
-                <div className="flex flex-wrap -mx-4">
-                    <div className="w-full md:w-1/2 px-4 mb-8">
+            <div className="max-w-[1200px] py-36 mx-auto px-4 ">
+                <div className="flex flex-wrap -mx-4 items-center">
+                    <div className="w-full md:w-1/2 px-4 ">
                         <img
                             alt="Product"
-                            className="w-full h-[500px] rounded-lg shadow-md mb-4"
+                            className="w-full h-[600px] rounded-lg shadow-md "
                             id="mainImage"
                             src={`/images/${product.anh}`}
                         />
-                        <div className="flex gap-4 py-4 justify-center overflow-x-auto">
-                            {/* Assuming product.thumbnails contains URLs for thumbnails */}
-                            {product.thumbnails && product.thumbnails.map((thumb, index) => (
-                                <img
-                                    key={index}
-                                    alt={`Thumbnail ${index + 1}`}
-                                    className="w-16 h-16 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                                    onClick={() => document.getElementById('mainImage').src = thumb}
-                                    src={thumb}
-                                />
-                            ))}
-                        </div>
+                       
                     </div>
                     <div className="w-full md:w-1/2 px-4">
                         <h2 className="text-3xl font-bold mb-2">
