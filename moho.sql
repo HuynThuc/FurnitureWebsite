@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th8 22, 2024 lúc 11:25 AM
+-- Thời gian đã tạo: Th9 14, 2024 lúc 05:05 PM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -43,10 +43,7 @@ CREATE TABLE `address_order` (
 --
 
 INSERT INTO `address_order` (`id`, `user_id`, `name`, `phone`, `city`, `district`, `ward`, `detailed_address`) VALUES
-(26, 4, 'Thức', '0975801610', 'Thành phố Hồ Chí Minh', 'Quận Bình Tân', 'Phường Bình Hưng Hoà A', 'B7/18Z, ấp 2A'),
-(27, 4, 'Thức', '0975801610', 'Thành phố Hà Nội', 'Huyện Ba Vì', 'Xã Sơn Đà', 'B7/18Z, ấp 2A'),
-(28, 4, 'My', '0975801610', 'Thành phố Hà Nội', 'Thị xã Sơn Tây', 'Xã Sơn Đông', 'B7/18Z, ấp 2A'),
-(29, 4, 'My', '0975801610', 'Thành phố Hà Nội', 'Quận Hà Đông', 'Phường Biên Giang', 'B7/18Z, ấp 2A');
+(34, 10, 'Thức', '0975801610', 'Tỉnh Hà Giang', 'Thành phố Hà Giang', 'Phường Trần Phú', 'B7/18Z, ấp 2A');
 
 -- --------------------------------------------------------
 
@@ -60,6 +57,13 @@ CREATE TABLE `cart_items` (
   `user_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `cart_items`
+--
+
+INSERT INTO `cart_items` (`cart_item_id`, `id_product`, `user_id`, `quantity`) VALUES
+(119, 78, 10, 1);
 
 -- --------------------------------------------------------
 
@@ -78,8 +82,11 @@ CREATE TABLE `loaisp` (
 --
 
 INSERT INTO `loaisp` (`id_loaisanpham`, `ten_loaisp`, `banner`) VALUES
-(7, 'Tủ bếp', '1723015700070_tubep2.jpg'),
-(8, 'Tủ gỗ', '1723868409341_Screenshot 2024-08-17 020116.png');
+(12, 'SoFa', '1725671301186_sofa.jpg'),
+(13, 'ArmChair', '1725671371513_banner-armchair-nha-xinh.jpg'),
+(14, 'Bàn ăn', '1725671421558_banan.jpg'),
+(15, 'Giường', '1725671501067_phong-ngu-hien-dai-thanh-lich-skagen-13522.jpg'),
+(16, 'Ghế ăn', '1725671539470_bo-suu-tap-elegance-ban-an.jpg');
 
 -- --------------------------------------------------------
 
@@ -101,8 +108,7 @@ CREATE TABLE `oder` (
 --
 
 INSERT INTO `oder` (`id_order`, `address_id`, `user_id`, `order_date`, `total_price`, `paymentMethod`) VALUES
-(29, 28, 4, '0000-00-00', 600.00, 'MOMO'),
-(30, 29, 4, '0000-00-00', 4440.00, 'MOMO');
+(31, 34, 10, '0000-00-00', 20650000.00, 'MOMO');
 
 -- --------------------------------------------------------
 
@@ -123,8 +129,7 @@ CREATE TABLE `order_detail` (
 --
 
 INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
-(18, 29, 40, 1, 600),
-(19, 30, 39, 8, 4440);
+(20, 31, 78, 5, 20650000);
 
 -- --------------------------------------------------------
 
@@ -165,8 +170,15 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`id`, `ten_sanpham`, `mo_ta`, `gia`, `id_loaisanpham`, `anh`) VALUES
-(39, 'Ngân', '<p>zxc</p>', 555, 7, '1724085197851_Screenshot 2024-08-17 020116.png'),
-(40, 'Ngân', '<p>kk</p>', 600, 7, '1724085282446_Screenshot 2024-08-17 020116.png');
+(77, 'Ghế ăn Bolero ACC001 Da AB1142', '<p><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></p><p>Chân inox màu gold - Bọc da bò cao cấp</p><p><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></p><p>D470 - R570 - C860 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113004</p><p><strong>Danh mục</strong>:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/ghe-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Ghế ăn</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ăn</a></p>', 5520000, 16, '1725671600152_image_2024-09-07_081315290.png'),
+(78, 'Ghế ăn có tay Ogami vải vact10499', '<h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Gỗ Beech tự nhiên bọc vải cao cấp</p><h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D580 - R575 - C785 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><h3><br></h3><p>Mã:&nbsp;3*113634</p><p><strong>Danh mục</strong>:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/ghe-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Ghế ăn</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ăn</a></p>', 4130000, 16, '1725671738978_image_2024-09-07_081538074.png'),
+(79, 'Ghế ăn Coastal KD1085-18', '<h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Gỗ Ash - nệm bọc vải</p><h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D435 - R525 - C840 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*111271</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/bep/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Bếp</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/ghe-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Ghế ăn</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ăn</a></p>', 4300000, 16, '1725671796574_image_2024-09-07_081635787.png'),
+(80, 'Ghế ăn có tay Valente', '<h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Lưng ghế Plywood veneer Oak - da mushroom - Chân inox mạ PVD</p><h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D500 - R550 - C850 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113475</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/ghe-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Ghế ăn</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ăn</a></p>', 5100000, 16, '1725671892424_image_2024-09-07_081811546.png'),
+(81, ' preview next Sofa 2 chỗ', '<h3><span style=\"color: rgb(10, 10, 11);\">Kích thước</span></h3><p>D1800 - R840 - C800 mm</p><h3><span style=\"color: rgb(10, 10, 11);\">Vật liệu</span></h3><p>(Giá không bao gồm gối trang trí)&nbsp;Gỗ Beech bọc vải nhập khẩu cao cấp</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113926</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng khách</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/sofa/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Sofa</a></p>', 13515000, 12, '1725672043910_image_2024-09-07_082042717.png'),
+(82, 'Sofa 2 chỗ Mây mới', '<h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D1690 - R760 - C700 mm</p><h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Gỗ beech tự nhiên - Nệm bọc vải nhập khẩu cao cấp - Mây tự nhiên màu trắng gồm 5 gối trang trí</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113345</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng khách</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/sofa/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Sofa</a></p>', 16915000, 12, '1725672305532_image_2024-09-07_082504714.png'),
+(83, 'Armchair Mây mới', '<h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D670 - R760 - C700 mm</p><h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Gỗ Beech tự nhiên - Nệm bọc vải nhập khẩu cao cấp - Mây tự nhiên màu trắng, bao gồm 1 gối trang trí</p><p><br></p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113344</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/armchair/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Armchair</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng khách</a></p>', 11815000, 13, '1725673684366_image_2024-09-07_084803347.png'),
+(84, 'Giường Coastal', '<h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Khung gỗ Ash - nệm bọc vải</p><h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D2000 - R1800 - C1080 mm</p><p>Mã:&nbsp;3*111277</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-ngu/giuong/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Giường</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-ngu/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ngủ</a></p>', 25000000, 15, '1725673760508_image_2024-09-07_084919599.png'),
+(85, 'Bàn ăn 8 chỗ', '<h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Chân kim loại sơn hiệu ứng, mặt đá</p><h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D2250 - R950 - C750 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*112668</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/ban-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Bàn ăn</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ăn</a></p>', 5000000, 14, '1725674639555_image_2024-09-07_090358817.png');
 
 -- --------------------------------------------------------
 
@@ -189,6 +201,7 @@ CREATE TABLE `slider` (
 
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `name` varchar(250) NOT NULL,
   `password` varchar(250) NOT NULL,
   `role_id` int(11) NOT NULL
@@ -198,9 +211,9 @@ CREATE TABLE `user` (
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `password`, `role_id`) VALUES
-(4, 'ngan', '$2b$10$e/V2ncRy/LDuOuJfHLHQYO.53uRtnLUqljDZ7gXS.2MJ.roPLi3A6', 1),
-(5, 'ninh', '$2b$10$WoyVGA538n7tVJY2qOJ7Z.YYR2AbGeEWglzyo0ZsSrXhAyoyZtO3u', 2);
+INSERT INTO `user` (`id`, `email`, `name`, `password`, `role_id`) VALUES
+(10, 'sieunhangao0985@gmail.com', 'Thức', '$2b$10$cIWW74zkk37fyFF9X13THu/zUZ6C9NtgQFcXq/MMxvfEQxa1L1M/K', 1),
+(11, 'ngan123@gmail.com', 'Ngân', '$2b$10$39UWNY9tmuNXgn3tnGeC4OuAmJuCuy6.xmElMkrIPA4RK.ejOUEVK', 2);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -277,31 +290,31 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `address_order`
 --
 ALTER TABLE `address_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT cho bảng `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT cho bảng `loaisp`
 --
 ALTER TABLE `loaisp`
-  MODIFY `id_loaisanpham` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_loaisanpham` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT cho bảng `oder`
 --
 ALTER TABLE `oder`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT cho bảng `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT cho bảng `role`
@@ -313,7 +326,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT cho bảng `slider`
@@ -325,7 +338,7 @@ ALTER TABLE `slider`
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
