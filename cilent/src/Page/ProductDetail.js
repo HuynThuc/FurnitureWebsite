@@ -5,14 +5,22 @@ import { AuthContext } from '../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
 import { CartContext } from '../Context/CartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons'; 
+
+
+
+import Cart from './Cart'; // Đảm bảo bạn đã import đúng
 
 const ProductDetail = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const { user } = useContext(AuthContext);
-    const { getCartItems} = useContext(CartContext)
+    const { getCartItems } = useContext(CartContext);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [cartOpen, setCartOpen] = useState(false); // State để mở/đóng giỏ hàng
 
     useEffect(() => {
         axios.get(`http://localhost:3001/product/${id}`)
@@ -38,6 +46,7 @@ const ProductDetail = () => {
         if (!user) {
             navigate('/login');
         } else {
+            setLoading(true); // Bắt đầu tải dữ liệu
             axios.post('http://localhost:3001/cart/add', {
                 id_product: id,
                 user_id: user.id,
@@ -46,9 +55,14 @@ const ProductDetail = () => {
             .then(response => {
                 console.log('Added to cart successfully:', response.data);
                 getCartItems();
+                setTimeout(() => {
+                    setCartOpen(true);
+                    setLoading(false); // Kết thúc tải dữ liệu
+                }, 1000);
             })
             .catch(error => {
                 console.error('Error adding to cart:', error);
+                setLoading(false); // Kết thúc tải dữ liệu trong trường hợp lỗi
             });
         }
     };
@@ -59,23 +73,18 @@ const ProductDetail = () => {
 
     return (
         <div className="bg-gray-100">
-            <div className="max-w-[1200px] py-36 mx-auto px-4 ">
+            <div className="max-w-[1200px] py-12 mx-auto px-4">
                 <div className="flex flex-wrap -mx-4 items-center">
-                    <div className="w-full md:w-1/2 px-4 ">
+                    <div className="w-full md:w-1/2 px-4 mb-8 md:mb-0">
                         <img
                             alt="Product"
-                            className="w-full h-[600px] rounded-lg shadow-md "
+                            className="w-full h-[600px] object-cover rounded-lg shadow-md"
                             id="mainImage"
                             src={`/images/${product.anh}`}
                         />
-                       
                     </div>
                     <div className="w-full md:w-1/2 px-4">
-                        <h2 className="text-3xl font-bold mb-2">
-                            {product.ten_sanpham}
-                        </h2>
-                    
-                      
+                        <h2 className="text-3xl font-bold mb-2">{product.ten_sanpham}</h2>
                         <div className="flex items-center mb-4">
                             {/* Example star rating */}
                             {[...Array(5)].map((_, index) => (
@@ -96,29 +105,22 @@ const ProductDetail = () => {
                                 {product.rating} ({product.reviews} reviews)
                             </span>
                         </div>
-                        <p className="text-gray-700 mb-6">
-                            {parse(product.mo_ta)}
-                        </p>
+                        <p className="text-gray-700 mb-6">{parse(product.mo_ta)}</p>
                         <div className="mb-6">
-                            <h3 className="text-lg font-semibold mb-2">
-                                Giá:
-                            </h3>
+                            <h3 className="text-lg font-semibold mb-2">Giá:</h3>
                             <div className="mb-4">
-                            <span className="text-2xl font-bold mr-2">
-                                {product.gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
-                            </span>
-                            {product.oldPrice && (
-                                <span className="text-gray-500 line-through">
-                                    {product.oldPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                <span className="text-2xl font-bold mr-2">
+                                    {product.gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                 </span>
-                            )}
-                        </div>
+                                {product.oldPrice && (
+                                    <span className="text-gray-500 line-through">
+                                        {product.oldPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                    </span>
+                                )}
+                            </div>
                         </div>
                         <div className="mb-6">
-                            <label
-                                className="block text-sm font-medium text-gray-700 mb-1"
-                                htmlFor="quantity"
-                            >
+                            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="quantity">
                                 Số lượng:
                             </label>
                             <div className="flex items-center">
@@ -149,28 +151,37 @@ const ProductDetail = () => {
                             <button
                                 className="bg-indigo-600 flex gap-2 items-center text-white px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 onClick={handleAddToCart}
+                                disabled={loading} // Disable button while loading
                             >
-                                <svg
-                                    className="w-6 h-6"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.5"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    />
-                                </svg>
-                                Add to Cart
+                                {loading ? (
+                                  <FontAwesomeIcon icon={faSpinner} spin size="1x" />
+                                ) : (
+                                    <>
+                                        <svg
+                                            className="w-6 h-6"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeWidth="1.5"
+                                            viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                            <path
+                                                d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                        Add to Cart
+                                    </>
+                                )}
                             </button>
-                          
                         </div>
                     </div>
                 </div>
             </div>
+
+            {/* Component Cart with props to control open state */}
+            <Cart cartOpen={cartOpen} onClose={() => setCartOpen(false)} />
         </div>
     );
 };

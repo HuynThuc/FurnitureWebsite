@@ -23,6 +23,7 @@ import ProductDetail from './Page/ProductDetail';
 import ProfileTab from './Component/ProfileTabs/ProfileTab';
 import Address from './Page/Address';
 import CheckOut from './Page/CheckOut';
+import OrderConfirmation from './Page/OrderConfirmation';
 import RequireAuth from './routes/RequireAuth'; // Import RequireAuth
 
 
@@ -53,6 +54,7 @@ function App() {
               <Route path="/about-us" element={<AboutUs />} /> 
               
               <Route path="/check-out" element={<CheckOut/>}/>
+              <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/account" element={<ProfileTab />}>
               
               <Route index element={<Profile />} />  {/* Đặt Profile làm trang mặc định */}

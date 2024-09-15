@@ -3,6 +3,8 @@ import AddressPopup from '../Component/AddressComponent/AddressPopup';
 import Address from './Address';
 import OrderSummary from './OrderSummary';
 import AuthContext from '../Context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios'; // Đảm bảo rằng bạn đã cài đặt axios
 
 const Checkout = () => {
@@ -11,6 +13,8 @@ const Checkout = () => {
     const [paymentMethod, setPaymentMethod] = useState('COD'); // Mặc định là COD
     const { user } = useContext(AuthContext);
     const [addresses, setAddresses] = useState([]);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         // Hàm lấy dữ liệu địa chỉ từ API
@@ -52,30 +56,29 @@ const Checkout = () => {
         if (!selectedAddress) {
             return alert('Vui lòng chọn địa chỉ giao hàng.');
         }
-
+    
         try {
             // Gửi yêu cầu tạo đơn hàng đến server
             await axios.post('http://localhost:3001/createOrder', {
                 userId: user.id,
                 addressId: selectedAddress,
-                paymentMethod: paymentMethod, // Gửi phương thức thanh toán
-
+                paymentMethod: paymentMethod,
             });
-             // Kiểm tra phương thức thanh toán đã chọn
-        if (paymentMethod === 'MOMO') { // Mã phương thức thanh toán MoMo
-            const paymentResponse = await axios.post('http://localhost:3001/payment', {
-              
-            });
-            window.location.href = paymentResponse.data.payUrl; // Chuyển hướng tới trang thanh toán MoMo
-        } else {
-            // Xử lý sau khi đơn hàng được tạo thành công
-            alert('Đơn hàng đã được tạo thành công.');
+    
+            // Kiểm tra phương thức thanh toán
+            if (paymentMethod === 'MOMO') {
+                const paymentResponse = await axios.post('http://localhost:3001/payment');
+                window.location.href = paymentResponse.data.payUrl;
+            } else {
+                // Chuyển hướng đến trang xác nhận đơn hàng
+                navigate('/order-confirmation');
+            }
+        } catch (error) {
+            console.error('Error placing order:', error);
+            alert('Có lỗi xảy ra khi đặt hàng.');
         }
-    } catch (error) {
-        console.error('Error placing order:', error);
-        alert('Có lỗi xảy ra khi đặt hàng.');
-    }
     };
+    
 
     return (
         <div className="checkout-container max-w-[1236px] mx-auto p-6">

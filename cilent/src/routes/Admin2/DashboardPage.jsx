@@ -169,24 +169,31 @@ const DashboardPage = () => {
     };
 
     //Thêm sản phẩm
-    const addProduct = (productData) => {
-        axios.post('http://localhost:3001/create', productData, {
-            headers: {
-                'Content-Type': 'multipart/form-data' // Đảm bảo header Content-Type là multipart/form-data khi gửi FormData
-            }
-        })
-            .then(response => {
-                // Xử lý khi thêm sản phẩm thành công
-                console.log('Product added successfully:', response.data);
-                fetchProduct();
-               
-                // Cập nhật danh sách sản phẩm hoặc thực hiện các hành động khác sau khi thêm sản phẩm thành công
-            })
-            .catch(error => {
-                // Xử lý khi có lỗi xảy ra
-                console.error('Error adding product:', error);
-            });
-    };
+   // Thêm sản phẩm
+const addProduct = (productData) => {
+    axios.post('http://localhost:3001/create', productData, {
+        headers: {
+            'Content-Type': 'multipart/form-data' // Đảm bảo header Content-Type là multipart/form-data khi gửi FormData
+        }
+    })
+    .then(response => {
+        // Kiểm tra phản hồi từ server
+        if (response.data.Error) {
+            console.error(response.data.Error); // In ra thông báo lỗi nếu có
+            alert(response.data.Error); // Hoặc bạn có thể sử dụng alert hoặc hiển thị thông báo lỗi trên UI
+        } else {
+            // Xử lý khi thêm sản phẩm thành công
+            console.log('Product added successfully:', response.data);
+            fetchProduct(); // Cập nhật danh sách sản phẩm sau khi thêm thành công
+        }
+    })
+    .catch(error => {
+        // Xử lý khi có lỗi xảy ra
+        console.error('Error adding product:', error);
+        alert('Error adding product');
+    });
+};
+
     //nút edit
     const handleEdit = (record) => {
         setRecordToEdit(record);

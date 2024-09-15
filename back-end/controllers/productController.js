@@ -3,6 +3,11 @@ const db = require('../config/db');
 
 //Tạo product
 const createProduct = (req, res) => {
+    // Kiểm tra nếu giá là số âm
+    if (req.body.gia < 0) {
+        return res.json({ Error: "Giá không được là số âm" });
+    }
+
     const sql = "INSERT INTO sanpham (ten_sanpham, mo_ta, gia, id_loaisanpham, anh) VALUES (?, ?, ?, ?, ?)";
     const values = [
         req.body.ten_sanpham,
@@ -11,6 +16,7 @@ const createProduct = (req, res) => {
         req.body.id_loaisanpham,
         req.file.filename 
     ];
+
     db.query(sql, values, (err, result) => {
         if (err) {
             return res.json({ Error: "Error creating product" });
@@ -18,6 +24,7 @@ const createProduct = (req, res) => {
         return res.json({ Status: "Success" });
     });
 };
+
 
 //Xóa sản phẩm
 const deleteProduct = (req, res) => {
