@@ -80,6 +80,8 @@ const DashboardPage = () => {
     const [selectedMenuKey, setSelectedMenuKey] = useState('sub1');
     const [dataSource, setDataSource] = useState([]);
     const [form] = Form.useForm();
+    const [loading, setLoading] = useState(false);
+
 
 
     const [products, setProducts] = useState([]);
@@ -134,17 +136,22 @@ const DashboardPage = () => {
     }, []);
 
 
-    
+
 
     //Lấy order detail
+    // Lấy order detail
     const handleViewOrderDetail = (id_order) => {
+        setLoading(true); // Bắt đầu quá trình loading
         axios.get(`http://localhost:3001/getOrderDetail/${id_order}`)
             .then(response => {
                 setRecordOrder(response.data); // Lưu thông tin chi tiết đơn hàng vào state
-                setOrderModalVisible(true); // Hiển thị Modal sau khi lưu dữ liệu thành công
+                setOrderModalVisible(true); // Hiển thị modal sau khi lưu dữ liệu thành công
             })
             .catch(error => {
                 console.error('Error fetching order details:', error);
+            })
+            .finally(() => {
+                setLoading(false); // Kết thúc quá trình loading
             });
     };
 
@@ -244,9 +251,14 @@ const DashboardPage = () => {
         setEditModalVisible(true);
     };
 
+    // Khi nhấn vào nút Order
     const handleOrder = (record) => {
-        setRecordOrder(record); // Lưu thông tin đơn hàng vào state
-        handleViewOrderDetail(record.id_order); // Gọi API để lấy chi tiết đơn hàng
+        setRecordOrder(null); // Xóa dữ liệu trước đó
+        setOrderModalVisible(false); // Đảm bảo modal đóng trước khi mở lại
+        setTimeout(() => {
+            setRecordOrder(record); // Cập nhật thông tin đơn hàng vào state
+            handleViewOrderDetail(record.id_order); // Lấy chi tiết đơn hàng mới
+        }, 200); // Thêm một khoảng trễ nhỏ để đảm bảo modal đóng hoàn toàn trước khi mở lại
     };
 
     //nút xóa
@@ -805,7 +817,6 @@ const DashboardPage = () => {
                     )}
                 </Form>
             </Modal>
-
             <Modal
                 title="Order Details"
                 visible={orderModalVisible}
@@ -813,16 +824,21 @@ const DashboardPage = () => {
                 footer={null} // Không hiển thị các nút footer nếu không cần thiết
                 width={1250} // Đặt chiều rộng của Modal nếu cần
             >
-                {recordToOrder ? (
-                    <OrderPage
-                        order={recordToOrder}
-                        onStatusUpdateSuccess={handleCloseModal}
-                        fetchOrder={fetchOrder}
-                    />
+                {loading ? (
+                    <p>Loading...</p> // Hiển thị loading khi đang lấy dữ liệu
                 ) : (
-                    <p>Loading...</p>
+                    recordToOrder ? (
+                        <OrderPage
+                            order={recordToOrder}
+                            onStatusUpdateSuccess={handleCloseModal}
+                            fetchOrder={fetchOrder}
+                        />
+                    ) : (
+                        <p>No order details found.</p>
+                    )
                 )}
             </Modal>
+
 
             <ToastContainer
                 position="top-right"
