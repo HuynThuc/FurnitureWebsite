@@ -4,8 +4,9 @@ import Address from './Address';
 import OrderSummary from './OrderSummary';
 import AuthContext from '../Context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
 import axios from 'axios'; // Đảm bảo rằng bạn đã cài đặt axios
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 const Checkout = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -54,9 +55,9 @@ const Checkout = () => {
 
     const handlePlaceOrder = async () => {
         if (!selectedAddress) {
-            return alert('Vui lòng chọn địa chỉ giao hàng.');
+            toast.info('Vui lòng chọn địa chỉ', {
+            });
         }
-    
         try {
             // Gửi yêu cầu tạo đơn hàng đến server
             await axios.post('http://localhost:3001/createOrder', {
@@ -75,7 +76,7 @@ const Checkout = () => {
             }
         } catch (error) {
             console.error('Error placing order:', error);
-            alert('Có lỗi xảy ra khi đặt hàng.');
+           
         }
     };
     
@@ -111,7 +112,7 @@ const Checkout = () => {
                                         <option value="0">Thêm địa chỉ</option>
                                         {addresses.map((address) => (
                                             <option key={address.id} value={address.id}>
-                                                {address.name}, {address.phone}, {address.detail_address}, {address.ward}, {address.district}, {address.city}
+                                                {address.name}, {address.phone}{address.detail_address}, {address.ward}, {address.district}, {address.city}
                                             </option>
                                         ))}
                                     </select>
@@ -193,6 +194,7 @@ const Checkout = () => {
 
             {/* Hiển thị AddressPopup nếu showPopup là true */}
             <AddressPopup showPopup={showPopup} onClose={handleClosePopup} onSubmit={handleSubmitPopup} fetchAddresses={fetchAddresses} />
+            
 
             {/* Nút Đặt hàng */}
             <div className="flex justify-end mt-6">
@@ -203,6 +205,10 @@ const Checkout = () => {
                     Đặt hàng
                 </button>
             </div>
+            <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar/>
         </div>
     );
 };

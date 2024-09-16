@@ -30,8 +30,9 @@ const AddressPopup = ({ showPopup, onClose, onSubmit, fetchAddresses }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          'https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json'
+          '/kenzouno1/DiaGioiHanhChinhVN/master/data.json'
         );
+        console.log('Cities Data:', response.data); // Debugging line
         setCities(response.data);
       } catch (error) {
         console.error('Error fetching data', error);
@@ -40,6 +41,7 @@ const AddressPopup = ({ showPopup, onClose, onSubmit, fetchAddresses }) => {
 
     fetchData();
   }, []);
+
 
   const handleCityChange = (event) => {
     const cityId = event.target.value;
@@ -75,12 +77,15 @@ const AddressPopup = ({ showPopup, onClose, onSubmit, fetchAddresses }) => {
 
   const handleWardChange = (event) => {
     const wardId = event.target.value;
-    const ward = wards.find((w) => w.Id === wardId);
+    const selectedWard = wards.find((w) => w.Id === wardId);
     setFormData((prevFormData) => ({
       ...prevFormData,
-      ward: ward.Name,
+      ward: selectedWard ? selectedWard.Name : '', // Store the ward ID
     }));
   };
+  
+  
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -179,7 +184,7 @@ const AddressPopup = ({ showPopup, onClose, onSubmit, fetchAddresses }) => {
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-2">Phường/Xã</label>
           <select
-            value={formData.ward}
+            value={wards.find((w) => w.Name === formData.ward)?.Id || ''} // Use ward ID to match value
             onChange={handleWardChange}
             className="w-full p-2 border border-gray-300 rounded-md"
           >

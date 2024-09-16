@@ -36,7 +36,7 @@
       if (user) {
         setUserMenuOpen(!userMenuOpen);
       } else {
-        toggleLogin();
+       navigate('/login');
       }
     };
 
@@ -176,17 +176,7 @@
           </div>
         </div>
        
-        {loginOpen && (
-            <>
-              <div className="login-popover">
-                <button className="close-button" onClick={toggleLogin}>
-                  <FontAwesomeIcon icon={faTimes} />
-                </button>
-                <Login toggleLogin={toggleLogin}/>
-              </div>
-              <div className="overlay open" onClick={toggleLogin}></div>
-            </>
-          )}
+        
 
           
         

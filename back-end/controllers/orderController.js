@@ -30,8 +30,8 @@ const createOrder = (req, res) => {
 
         // Tạo đơn hàng mới với phương thức thanh toán
         db.query(
-            'INSERT INTO `oder` (`address_id`, `user_id`, `order_date`, `total_price`, `paymentMethod`) VALUES (?, ?, ?, ?, ?)',
-            [addressId, userId, Math.floor(Date.now() / 1000), total, paymentMethod], // Lưu tổng giá và phương thức thanh toán
+            'INSERT INTO `oder` (`address_id`, `user_id`, `total_price`, `paymentMethod`,  `status`) VALUES (?, ?, ?, ?, ?)',
+            [addressId, userId, total, paymentMethod, 'Đang xử lý'], // Lưu tổng giá và phương thức thanh toán
             (err, orderResult) => {
                 if (err) {
                     console.error('Error creating order:', err);
@@ -81,7 +81,7 @@ const createOrder = (req, res) => {
 
 //Lấy thông tin đơn hàng 
 const getOrder = (req, res) => {
-    const sql = `SELECT oder.id_order, oder.total_price, user.name, address_order.*
+    const sql = `SELECT oder.id_order, oder.status, oder.createdAt, oder.total_price, oder.paymentMethod, user.name, address_order.*
 FROM oder
 JOIN user ON oder.user_id = user.id
 JOIN address_order ON oder.address_id = address_order.id`;
@@ -93,4 +93,70 @@ JOIN address_order ON oder.address_id = address_order.id`;
     });
 }
 
-module.exports = { createOrder, getOrder };
+const updateOrderStatus = (req, res) => {
+    const { id } = req.params;
+    const {status} = req.body; // Nhận orderId và newStatus từ frontend
+
+    if (!id) {
+        return res.status(400).json({ message: 'Yêu cầu phải có orderId và newStatus.' });
+    }
+
+    // Cập nhật trạng thái đơn hàng
+    const sql = 'UPDATE `oder` SET `status` = ? WHERE `id_order` = ?';
+
+    db.query(sql, [status, id], (err, result) => {
+        if (err) {
+            console.error('Error updating order status:', err);
+            return res.status(500).json({ message: 'Có lỗi xảy ra khi cập nhật trạng thái đơn hàng.' });
+        }
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Đơn hàng không tìm thấy.' });
+        }
+
+        res.status(200).json({ message: 'Trạng thái đơn hàng đã được cập nhật thành công.' });
+    });
+};
+
+
+
+//Lấy thông tin đơn hàng 
+// Lấy thông tin đơn hàng
+const getOrderDetail = (req, res) => {
+    const orderId = req.params.id; // Lấy ID đơn hàng từ tham số URL
+
+    const sql = `
+        SELECT 
+            oder.id_order, 
+            oder.createdAt, 
+            oder.total_price, 
+            oder.paymentMethod, 
+            oder.status,
+            user.name, 
+            address_order.detailed_address,
+            address_order.phone,
+            address_order.ward,
+            address_order.district,
+            address_order.city,
+            sanpham.ten_sanpham, 
+            sanpham.anh, 
+            order_detail.quantity, 
+            order_detail.price
+        FROM oder
+        JOIN user ON oder.user_id = user.id
+        JOIN address_order ON oder.address_id = address_order.id
+        JOIN order_detail ON oder.id_order = order_detail.order_id
+        JOIN sanpham ON order_detail.product_id = sanpham.id
+        WHERE oder.id_order = ?;
+    `;
+
+    db.query(sql, [orderId], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: "Internal server error" });
+        }
+        return res.json(results);
+    });
+};
+
+
+module.exports = { createOrder, getOrder, getOrderDetail, updateOrderStatus };

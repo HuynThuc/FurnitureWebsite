@@ -6,7 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import parse from 'html-react-parser';
 import { CartContext } from '../Context/CartContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'; 
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 
 
@@ -44,7 +46,8 @@ const ProductDetail = () => {
 
     const handleAddToCart = () => {
         if (!user) {
-            navigate('/login');
+            toast.info('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!', {
+            });
         } else {
             setLoading(true); // Bắt đầu tải dữ liệu
             axios.post('http://localhost:3001/cart/add', {
@@ -182,6 +185,10 @@ const ProductDetail = () => {
 
             {/* Component Cart with props to control open state */}
             <Cart cartOpen={cartOpen} onClose={() => setCartOpen(false)} />
+            <ToastContainer
+            position="top-right"
+            autoClose={2000}
+            hideProgressBar/>
         </div>
     );
 };

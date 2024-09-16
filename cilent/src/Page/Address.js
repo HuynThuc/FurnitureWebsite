@@ -96,7 +96,7 @@ const onDelete = async (id) => {
             <div className="flex flex-col">
               <div className="text-lg font-semibold">{address.name} - {address.phone}</div>
               <div className="text-sm text-gray-600">
-                {address.detail_address}, {address.ward}, {address.district}, {address.city}
+                {address.detail_address} {address.ward}, {address.district}, {address.city}
               </div>
             </div>
             <div className="flex items-center space-x-2">

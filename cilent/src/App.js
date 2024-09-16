@@ -25,6 +25,7 @@ import Address from './Page/Address';
 import CheckOut from './Page/CheckOut';
 import OrderConfirmation from './Page/OrderConfirmation';
 import RequireAuth from './routes/RequireAuth'; // Import RequireAuth
+import OrderPage from './routes/Admin2/OrderDetail';
 
 
 // Layout component for wrapping header and footer
@@ -51,26 +52,25 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/about-us" element={<AboutUs />} /> 
-              
-              <Route path="/check-out" element={<CheckOut/>}/>
+              <Route path="/about-us" element={<AboutUs />} />
+
+
+              <Route path="/check-out" element={<CheckOut />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/account" element={<ProfileTab />}>
-              
-              <Route index element={<Profile />} />  {/* Đặt Profile làm trang mặc định */}
-              <Route path="address" element={<Address />} /> 
+
+                <Route index element={<Profile />} />  {/* Đặt Profile làm trang mặc định */}
+                <Route path="address" element={<Address />} />
               </Route>
 
-              <Route 
-                path="/admin-2" 
-                element={
-                  <RequireAuth requiredRole={1}>
-                    <DashboardPage />
-                  </RequireAuth>
-                } 
-              />
+              <Route path="/admin-2" element={<RequireAuth requiredRole={1}><DashboardPage /></RequireAuth>}>
+                {/* Route con cho chi tiết đơn hàng */}
+                <Route path="orders" element={<OrderPage />} />
+              </Route>
+
+
               <Route path="/cart" element={<Cart />} />
-              <Route path="/productdetail/:id" element={<ProductDetail/>} />
+              <Route path="/productdetail/:id" element={<ProductDetail />} />
               {/* Add the routes for CategoryProduct */}
               <Route path="/category/:categoryId" element={<CategoryProduct />} />
               {/* Add more routes as needed */}
