@@ -1,0 +1,87 @@
+.header__slide-img {
+    position: absolute;
+    top: 100%;
+    /* Đặt slide-img dưới phần menu */
+    left: 0;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.header__slide-img img {
+    width: 100%;
+    display: block;
+}
+
+.header__slider {
+    width: 100%;
+    /* Đảm bảo phần slider chiếm toàn bộ chiều rộng của container */
+    height: 740px;
+    /* Điều chỉnh chiều cao của slider */
+    overflow: hidden;
+    /* Ẩn phần của ảnh vượt ra khỏi phần container */
+    position: relative;
+    margin-bottom: 9px;
+    z-index: 1; /* Thiết lập z-index cho Slider */
+}
+
+.slider-image {
+    width: 100% !important;
+    /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của container */
+    height: 100%;
+    /* Cho phép tỷ lệ hình ảnh tự điều chỉnh để tránh bị méo hoặc căng */
+    object-fit: cover;
+    /* Ẩn phần của ảnh không vừa với container */
+    display: block;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    /* Thêm transition cho opacity */
+    opacity: 1;
+    /* Mặc định hiển thị ảnh */
+    margin-top: 141px;
+}
+
+.slider-image:not(.active) {
+    opacity: 0.5;
+    /* Điều chỉnh độ trong suốt của ảnh không được chọn */
+}
+
+.slider-image-container {
+    position: relative;
+    /* display: inline-block; */
+    display: flex;
+}
+
+.slider-button {
+    position: absolute;
+    top: 60%;
+    margin: 4px;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    transform: translateY(-50%);
+    border: 1px solid #dddddd;
+    color: #fff;
+    padding: 0;
+    cursor: pointer;
+    z-index: 10;
+    /* Đảm bảo nút hiển thị trên ảnh */
+    border-radius: 50%; /* Hình dạng của nút Button*/
+    background-color: #ef683a; /* Màu của nút Button */
+    transition: all 0,6s;
+    display: none; /* Ẩn ban đầu */
+}
+
+.slider-button.prev {
+    left: 20px;
+    /* Đặt vị trí nút prev ở bên trái */
+    font-size: 1.2em; /* Thêm kích thước */
+}
+
+.slider-button.next {
+    right: 20px;
+    /* Đặt vị trí nút next ở bên phải */
+    font-size: 1.2em; /* Thêm kích thước */
+}
+
+.header__slider:hover .slider-button {
+    display: block;
+}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { LaptopOutlined, NotificationOutlined, UserOutlined, PlusOutlined } from '@ant-design/icons';
@@ -81,13 +81,11 @@ const DashboardPage = () => {
     const [dataSource, setDataSource] = useState([]);
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
-
-
-
     const [products, setProducts] = useState([]);
     const [category, setCategories] = useState([]);
     const [order, setOrder] = useState([]);
-    const navigate = useNavigate();
+    const [user, setUser] = useState([]);
+   
 
     const statusColors = {
         'Đang xử lý': 'bg-yellow-200 text-yellow-800',
@@ -99,11 +97,28 @@ const DashboardPage = () => {
 
 
     const validatePrice = (_, value) => {
-        if (value < 0) {
+        if (value < 0) {                    
             return Promise.reject(new Error('Vui lòng nhập giá hợp lệ!'));
         }
         return Promise.resolve();
     };
+
+    useEffect(() => {
+        // Hàm fetch dữ liệu từ API
+        const fetchUsers = async () => {
+            try {
+              
+                const response = await axios.get('http://localhost:3001/getUser'); // Thay bằng đường dẫn API thực tế của bạn
+                setUser(response.data); // Cập nhật state users với dữ liệu nhận được
+             
+            } catch (err) {
+                console.error('Error fetching users:', err); // In ra lỗi nếu có
+               
+            }
+        };
+
+        fetchUsers(); // Gọi hàm fetchUsers khi component được render lần đầu
+    }, []); // Mảng [] rỗng để đảm bảo useEffect chỉ chạy một lần
 
 
     //Lấy sản  phẩm
@@ -187,17 +202,28 @@ const DashboardPage = () => {
     }, []);
 
     // Hàm xóa sản phẩm
-    const deleteProduct = async (productId) => {
-        try {
-            const response = await axios.delete(`http://localhost:3001/deleteProduct/${productId}`);
-            console.log(response.data); // Xem phản hồi từ server
-            if (response.status === 200) {
-                fetchProduct();
-            }
-        } catch (error) {
-            console.error('Error deleting product:', error.response ? error.response.data : error.message);
-        }
-    };
+   // Hàm xóa sản phẩm
+
+   
+   // Hàm xóa sản phẩm
+   const deleteProduct = async (productId) => {
+       try {
+           const response = await axios.delete(`http://localhost:3001/deleteProduct/${productId}`);
+           console.log(response.data); // Xem phản hồi từ server
+           if (response.status === 200) {
+               fetchProduct();
+               message.success(response.data.message); // Hiển thị thông báo xóa thành công
+           }
+       } catch (error) {
+           if (error.response && error.response.data) {
+               message.error(`Không thể xóa vì sản phẩm có trong đơn hàng`); // Hiển thị thông báo lỗi chi tiết từ server
+           } else {
+               console.error('Error deleting product:', error.message);
+           }
+       }
+   };
+   
+
 
     //Thêm loại sản phẩm
     const addCategory = (categoryData) => {
@@ -383,7 +409,7 @@ const DashboardPage = () => {
     useEffect(() => {
         switch (selectedMenuKey) {
             case 'sub1':
-                setDataSource(userData);
+                setDataSource(user);
                 break;
             case 'sub2-1':
                 setDataSource(products);
@@ -397,7 +423,7 @@ const DashboardPage = () => {
             default:
                 break;
         }
-    }, [selectedMenuKey, userData, category, products, order]);
+    }, [selectedMenuKey, user, category, products, order]);
 
     const handleAddNewRecord = () => {
         setAddModalVisible(true);
@@ -411,20 +437,11 @@ const DashboardPage = () => {
             key: 'name',
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            key: 'age',
+            title: 'Email',
+            dataIndex: 'email',
+            key: 'email',
         },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            key: 'address',
-        },
-        {
-            title: 'Phone Number',
-            dataIndex: 'phoneNumber',
-            key: 'phoneNumber',
-        },
+       
         {
             title: 'Actions',
             dataIndex: '',
@@ -557,21 +574,41 @@ const DashboardPage = () => {
                     {status}
                 </div>
             ),
-
         },
-
         {
             title: 'Actions',
             dataIndex: '',
             key: 'actions',
-            render: (_, record) => (
-                <span>
-                    <Button type="link" icon={<EditOutlined />} style={{ marginRight: 16 }} onClick={() => handleOrder(record)}>Order</Button>
-                    <Button type="link" icon={<DeleteOutlined />} onClick={() => handleDelete(record)}>Delete</Button>
-                </span>
-            ),
+            render: (_, record) => {
+                // Kiểm tra nếu trạng thái là 'Hoàn thành', thì không hiển thị các nút hành động
+                if (record.status === 'Hoàn thành') {
+                    return null; // Không hiển thị gì cả
+                }
+    
+                // Nếu trạng thái không phải là 'Hoàn thành', hiển thị các nút Order và Delete
+                return (
+                    <span>
+                        <Button
+                            type="link"
+                            icon={<EditOutlined />}
+                            style={{ marginRight: 16 }}
+                            onClick={() => handleOrder(record)}
+                        >
+                            Order
+                        </Button>
+                        <Button
+                            type="link"
+                            icon={<DeleteOutlined />}
+                            onClick={() => handleDelete(record)}
+                        >
+                            Delete
+                        </Button>
+                    </span>
+                );
+            },
         },
     ];
+    
 
 
     //lấy bảng
@@ -599,12 +636,12 @@ const DashboardPage = () => {
         <Layout>
             <Header style={{ display: 'flex', alignItems: 'center' }}>
                 <div className="demo-logo">
-                    <img src={AdminImage} alt="Logo" style={{ width: '200px', marginTop: '20px' }} />
+                    <img  alt="Logo" style={{ width: '200px', marginTop: '20px' }} />
                 </div>
                 <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} style={{ flex: 1, minWidth: 0 }} />
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar size="default" icon={<UserOutlined />} alt="User Avatar" style={{ marginRight: 16 }} />
-                    <Text style={{ color: '#fff' }}>Lê Tiến Phát</Text>
+                    <Text style={{ color: '#fff' }}>Trần Huỳnh Thưc</Text>
                 </div>
             </Header>
             <Content style={{ padding: '0 48px' }}>

@@ -26,6 +26,7 @@ import CheckOut from './Page/CheckOut';
 import OrderConfirmation from './Page/OrderConfirmation';
 import RequireAuth from './routes/RequireAuth'; // Import RequireAuth
 import OrderPage from './routes/Admin2/OrderDetail';
+import Slider from './Component/SliderHome/Slider';
 
 
 // Layout component for wrapping header and footer
@@ -53,6 +54,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/sliderhome" element={<Slider />} />
 
 
               <Route path="/check-out" element={<CheckOut />} />

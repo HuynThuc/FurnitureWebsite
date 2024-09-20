@@ -72,5 +72,19 @@ const signup = (req, res) => {
     });
 };
 
+const getAllUsers = (req, res) => {
+    const sql = "SELECT * FROM user"; // Câu truy vấn SQL
 
-module.exports = { login, signup };
+    db.query(sql, (err, result) => {
+        if (err) {
+            console.error('Error fetching users:', err);
+            return res.status(500).json({ error: 'Internal server error' });
+        }
+
+        // Trả về danh sách người dùng dưới dạng JSON
+        res.json(result);
+    });
+};
+
+
+module.exports = { login, signup, getAllUsers};

@@ -91,15 +91,7 @@ const Checkout = () => {
                     <div className="section-content border border-gray-300 p-4 rounded-lg bg-white shadow-md">
 
                         <div className="logged-in-customer-information">
-                            <div className="flex items-center space-x-4 mb-4">
-                                <div className="w-24 h-24 bg-gray-200 rounded-full overflow-hidden">
-                                    <img src="//www.gravatar.com/avatar/194edef3f0381b63a9a2001fe3b6797a.jpg?s=100&amp;d=blank" alt="Avatar" className="w-full h-full object-cover" />
-                                </div>
-                                <div className="text-gray-800">
-
-                                    <a href="/account/logout?return_url=%2Fcheckouts%2F8d15bc8be1b04727850a1287ec06d27e%3Fstep%3D1" className="text-blue-500 hover:underline">Đăng xuất</a>
-                                </div>
-                            </div>
+                          
                             <div className="space-y-4">
                                 <div>
                                     <select
@@ -117,22 +109,7 @@ const Checkout = () => {
                                         ))}
                                     </select>
                                 </div>
-                                <div>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        placeholder="Họ và tên"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        className="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                        placeholder="Số điện thoại"
-                                    />
-                                </div>
+                               
                             </div>
                         </div>
                     </div>

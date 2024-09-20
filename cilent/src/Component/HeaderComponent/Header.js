@@ -76,12 +76,15 @@
         <section className="relative mx-auto">
       <nav className="flex justify-between bg-gray-900 text-white w-[99.2vw]">
         <div className="px-40  py-6 flex w-full items-center">
-          <a
-            className="text-3xl font-bold font-heading"
-            href="/"
-          >
-            Logo Here.
-          </a>
+        <a className="text-3xl font-bold font-heading" href="/">
+  <img 
+    src="/images/logohome.jpg" 
+    alt="Logo" 
+    width="50" 
+    height="50" 
+  />
+</a>
+
           <ul className="md:flex px-4 mx-auto font-semibold font-heading space-x-12">
           <li>
               <a
@@ -121,7 +124,7 @@
             <li>
               <a
                 className="hover:text-gray-200"
-                href="#"
+                href="/about-us"
               >
                 Contact Us
               </a>

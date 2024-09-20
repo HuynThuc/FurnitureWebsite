@@ -27,24 +27,37 @@ const createProduct = (req, res) => {
 const deleteProduct = (req, res) => {
     const { id } = req.params;
 
-    // Kiểm tra xem id_sanpham có tồn tại không
+    // Kiểm tra xem id có tồn tại không
     if (!id) {
-        return res.status(400).json({ Error: "Thiếu id sản phẩm" });
+        return res.status(400).json({ error: "Thiếu id sản phẩm" });
     }
 
-    db.query("DELETE FROM sanpham WHERE id = ?", [id], (err, result) => {
+    const deleteQuery = "DELETE FROM sanpham WHERE id = ?";
+    db.query(deleteQuery, [id], (err, result) => {
         if (err) {
-            console.error('Error deleting cart item:', err);
-            res.status(500).json({ error: "Internal server error" });
-        } else {
-            if (result.affectedRows > 0) {
-                res.json({ message: " deleted successfully" });
-            } else {
-                res.status(404).json({ error: " not found" });
+            console.error('Error deleting product:', err);
+
+            // Kiểm tra mã lỗi để xác định lỗi khóa ngoại
+            if (err.code === 'ER_ROW_IS_REFERENCED_2') {
+                return res.status(400).json({ 
+                    error: "Không thể xóa sản phẩm vì nó đang được tham chiếu trong đơn hàng." 
+                });
             }
+
+            // Các lỗi khác
+            return res.status(500).json({ error: "Lỗi server, không thể xóa sản phẩm." });
         }
+
+        // Kiểm tra nếu không có hàng nào bị ảnh hưởng (tức là không tìm thấy sản phẩm)
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: "Sản phẩm không tìm thấy." });
+        }
+
+        // Xóa thành công
+        res.json({ message: "Sản phẩm đã được xóa thành công." });
     });
 };
+
 
 //Sửa sản phẩm
 const updateProduct = (req, res) => {
