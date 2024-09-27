@@ -3,8 +3,6 @@ const db = require('../config/db');
 
 //Tạo product
 const createProduct = (req, res) => {
-   
-
     const sql = "INSERT INTO sanpham (ten_sanpham, mo_ta, gia, id_loaisanpham, anh) VALUES (?, ?, ?, ?, ?)";
     const values = [
         req.body.ten_sanpham,
@@ -13,7 +11,6 @@ const createProduct = (req, res) => {
         req.body.id_loaisanpham,
         req.file.filename 
     ];
-
     db.query(sql, values, (err, result) => {
         if (err) {
             return res.json({ Error: "Error creating product" });

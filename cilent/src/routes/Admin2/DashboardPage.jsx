@@ -717,14 +717,14 @@ const DashboardPage = () => {
                             <Form.Item name="gia" label="Giá" rules={[{ required: true, message: 'Please input the stock!' }]}>
                                 <Input />
                             </Form.Item>
-                            {/* <Form.Item
+                            <Form.Item
                                 name="id_loaisanpham"
                                 label="Loại sản phẩm"
                                 rules={[{ required: true, message: 'Please select a category!' }]}
                             >
                                 <Select
                                     placeholder="Chọn loại sản phẩm"
-                                    onChange={handleSelectChange}
+                                    
                                 >
                                     {category.map((category) => (
                                         <Option key={category.id_loaisanpham} value={category.id_loaisanpham}>
@@ -739,7 +739,7 @@ const DashboardPage = () => {
                                 >
                                     <Button icon={<UploadOutlined />}>Click để tải lên</Button>
                                 </Upload>
-                            </Form.Item> */}
+                            </Form.Item>
                         </>
                     )}
                     {selectedMenuKey === 'sub2-2' && (

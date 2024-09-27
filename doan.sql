@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th9 16, 2024 lúc 07:50 PM
+-- Thời gian đã tạo: Th9 20, 2024 lúc 06:15 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.2.12
 
@@ -43,7 +43,6 @@ CREATE TABLE `address_order` (
 --
 
 INSERT INTO `address_order` (`id`, `user_id`, `name`, `phone`, `city`, `district`, `ward`, `detailed_address`) VALUES
-(43, 10, 'ád', '0975801610', 'Thành phố Hà Nội', 'Huyện Ba Vì', 'Xã Sơn Đà', 'bn7.18z'),
 (44, 15, 'Ninh', '0975801610', 'Thành phố Hồ Chí Minh', 'Huyện Bình Chánh', '27601', 'B7/18Z, ấp 2A'),
 (45, 10, 'Thức', '0975801610', 'Thành phố Hồ Chí Minh', 'Huyện Bình Chánh', 'Xã Vĩnh Lộc A', 'B7/18Z, ấp 2A');
 
@@ -65,11 +64,7 @@ CREATE TABLE `cart_items` (
 --
 
 INSERT INTO `cart_items` (`cart_item_id`, `id_product`, `user_id`, `quantity`) VALUES
-(165, 84, 11, 1),
-(166, 81, 11, 1),
-(167, 78, 14, 4),
-(168, 84, 14, 2),
-(175, 82, 10, 3);
+(167, 78, 14, 4);
 
 -- --------------------------------------------------------
 
@@ -116,7 +111,9 @@ CREATE TABLE `oder` (
 
 INSERT INTO `oder` (`id_order`, `address_id`, `user_id`, `total_price`, `paymentMethod`, `createdAt`, `status`) VALUES
 (68, 45, 10, 33830000.00, 'COD', '2024-09-16 16:47:36', 'Đã hủy'),
-(75, 44, 15, 50745000.00, 'COD', '2024-09-16 17:43:43', 'Đang giao hàng');
+(75, 44, 15, 50745000.00, 'COD', '2024-09-16 17:43:43', 'Đang giao hàng'),
+(76, 45, 10, 55045000.00, 'COD', '2024-09-19 04:57:42', 'Hoàn thành'),
+(77, 45, 10, 61165000.00, 'COD', '2024-09-19 04:52:24', 'Hoàn thành');
 
 -- --------------------------------------------------------
 
@@ -138,7 +135,11 @@ CREATE TABLE `order_detail` (
 
 INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
 (46, 68, 82, 2, 33830000),
-(48, 75, 82, 3, 50745000);
+(48, 75, 82, 3, 50745000),
+(49, 76, 82, 3, 50745000),
+(50, 76, 79, 1, 4300000),
+(51, 77, 92, 1, 56865000),
+(52, 77, 79, 1, 4300000);
 
 -- --------------------------------------------------------
 
@@ -182,10 +183,12 @@ INSERT INTO `sanpham` (`id`, `ten_sanpham`, `mo_ta`, `gia`, `id_loaisanpham`, `a
 (77, 'Ghế ăn Bolero ACC001 Da AB1142', '<p><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></p><p>Chân inox màu gold - Bọc da bò cao cấp</p><p><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></p><p>D470 - R570 - C860 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113004</p><p><strong>Danh mục</strong>:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/ghe-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Ghế ăn</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ăn</a></p>', 5520000, 16, '1725671600152_image_2024-09-07_081315290.png'),
 (78, 'Ghế ăn có tay Ogami vải vact10499', '<h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Gỗ Beech tự nhiên bọc vải cao cấp</p><h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D580 - R575 - C785 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><h3><br></h3><p>Mã:&nbsp;3*113634</p><p><strong>Danh mục</strong>:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/ghe-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Ghế ăn</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ăn</a></p>', 4130000, 16, '1725671738978_image_2024-09-07_081538074.png'),
 (79, 'Ghế ăn Coastal KD1085-18', '<h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Gỗ Ash - nệm bọc vải</p><h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D435 - R525 - C840 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*111271</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/bep/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Bếp</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/ghe-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Ghế ăn</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ăn</a></p>', 4300000, 16, '1725671796574_image_2024-09-07_081635787.png'),
-(80, 'Ghế ăn có tay Valente', '<h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Lưng ghế Plywood veneer Oak - da mushroom - Chân inox mạ PVD</p><h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D500 - R550 - C850 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113475</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/ghe-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Ghế ăn</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-an/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ăn</a></p>', 5100000, 16, '1725671892424_image_2024-09-07_081811546.png'),
-(81, ' preview next Sofa 2 chỗ', '<h3><span style=\"color: rgb(10, 10, 11);\">Kích thước</span></h3><p>D1800 - R840 - C800 mm</p><h3><span style=\"color: rgb(10, 10, 11);\">Vật liệu</span></h3><p>(Giá không bao gồm gối trang trí)&nbsp;Gỗ Beech bọc vải nhập khẩu cao cấp</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113926</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng khách</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/sofa/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Sofa</a></p>', 13515000, 12, '1725672043910_image_2024-09-07_082042717.png'),
 (82, 'Sofa 2 chỗ Mây mới', '<h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D1690 - R760 - C700 mm</p><h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Gỗ beech tự nhiên - Nệm bọc vải nhập khẩu cao cấp - Mây tự nhiên màu trắng gồm 5 gối trang trí</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113345</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng khách</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/sofa/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Sofa</a></p>', 16915000, 12, '1725672305532_image_2024-09-07_082504714.png'),
-(84, 'Giường Coastal', '<h3><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></h3><p>Khung gỗ Ash - nệm bọc vải</p><h3><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></h3><p>D2000 - R1800 - C1080 mm</p><p>Mã:&nbsp;3*111277</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-ngu/giuong/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Giường</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-ngu/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ngủ</a></p>', 25000000, 15, '1725673760508_image_2024-09-07_084919599.png');
+(88, 'Armchair Mây mới', '<p><strong style=\"color: rgb(10, 10, 11);\">Kích thước</strong></p><p>D670 - R760 - C700 mm</p><p><strong style=\"color: rgb(10, 10, 11);\">Vật liệu</strong></p><p>Gỗ Beech tự nhiên - Nệm bọc vải nhập khẩu cao cấp - Mây tự nhiên màu trắng, bao gồm 1 gối trang trí</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p>', 11815000, 13, '1726720733437_image_2024-09-19_113852610.png'),
+(89, 'Armchair Ogami vải vact10499', '<p><span style=\"color: rgb(10, 10, 11);\">Vật liệu</span></p><p>Gỗ Beech bọc vải cao cấp</p><p><span style=\"color: rgb(10, 10, 11);\">Kích thước</span></p><p>D820 - R720 - C730 mm</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113632</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/armchair/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Armchair</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/giam-gia-dac-biet/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Giảm giá đặc biệt</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng khách</a></p>', 12000000, 13, '1726720774677_image_2024-09-19_113933980.png'),
+(90, 'Bàn nước Poppy mẫu 2 – màu smoke', '<p><span style=\"color: rgb(10, 10, 11);\">Kích thước</span></p><p>D1200 - R600 - C420 mm</p><p><span style=\"color: rgb(10, 10, 11);\">Vật liệu</span></p><p>Mặt kính cường lực, gỗ tần bì (ash), chân sơn đen</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*114602</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/ban-nuoc/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Bàn nước</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng khách</a></p>', 5000000, 14, '1726720831643_image_2024-09-19_114030707.png'),
+(91, 'Bàn nước Orientale walnut', '<p><span style=\"color: rgb(10, 10, 11);\">Kích thước</span></p><p>Φ:950 - C340 mm</p><p><span style=\"color: rgb(10, 10, 11);\">Vật liệu</span></p><p>Gỗ walnut</p><p><span style=\"color: rgb(10, 10, 11);\">Collection</span></p><p>Orientale</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113665</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/ban-nuoc/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Bàn nước</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-khach/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng khách</a></p>', 5000000, 14, '1726720862595_image_2024-09-19_114101795.png'),
+(92, 'Giường Ona Him 1m8', '<p><span style=\"color: rgb(10, 10, 11);\">Kích thước</span></p><p>D2000 - R1800 - C940 mm</p><p><span style=\"color: rgb(10, 10, 11);\">Vật liệu</span></p><p>Gỗ sồi tự nhiên, bọc da bò cao cấp màu nâu</p><p>Hàng có sẵn -&nbsp;<strong style=\"color: rgb(10, 10, 11);\">Xem cửa hàng trưng bày</strong></p><p><br></p><p>Mã:&nbsp;3*113628</p><p>Danh mục:&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-ngu/giuong/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Giường</a>,&nbsp;<a href=\"https://nhaxinh.com/danh-muc/phong-ngu/\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(10, 10, 11);\">Phòng ngủ</a></p>', 56865000, 15, '1726721376549_image_2024-09-19_114935702.png');
 
 -- --------------------------------------------------------
 
@@ -307,7 +310,7 @@ ALTER TABLE `address_order`
 -- AUTO_INCREMENT cho bảng `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=177;
+  MODIFY `cart_item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
 
 --
 -- AUTO_INCREMENT cho bảng `loaisp`
@@ -319,13 +322,13 @@ ALTER TABLE `loaisp`
 -- AUTO_INCREMENT cho bảng `oder`
 --
 ALTER TABLE `oder`
-  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_order` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT cho bảng `order_detail`
 --
 ALTER TABLE `order_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT cho bảng `role`
@@ -337,7 +340,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT cho bảng `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT cho bảng `slider`

@@ -99,7 +99,7 @@
                 className="hover:text-gray-200 cursor-pointer"
                 href="/product"
               >
-                Sản phẩm
+                Product
               </a>
               <div className="absolute inline-block align-middle ml-1 mt-[3px]">
                   {isThirdDropdownOpen ? <FaAngleUp /> : <FaAngleDown />}

@@ -6,13 +6,9 @@ import { BrowserRouter as Router, Routes, Route, Outlet, useLocation } from 'rea
 import Login from './Component/LoginComponent/Login';
 import Register from './Component/RegisterComponent/Register';
 import AboutUs from './routes/AboutUs';
-
 import Profile from './Page/Profile';
-
-
 import Header from './Component/HeaderComponent/Header';
 import Footer from './Component/FooterComponent/Footer';
-
 import { AuthProvider } from './Context/AuthContext';
 import Cart from './Page/Cart';
 import DashboardPage from './routes/Admin2/DashboardPage';
@@ -55,22 +51,16 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/sliderhome" element={<Slider />} />
-
-
               <Route path="/check-out" element={<CheckOut />} />
               <Route path="/order-confirmation" element={<OrderConfirmation />} />
               <Route path="/account" element={<ProfileTab />}>
-
                 <Route index element={<Profile />} />  {/* Đặt Profile làm trang mặc định */}
                 <Route path="address" element={<Address />} />
               </Route>
-
               <Route path="/admin-2" element={<RequireAuth requiredRole={1}><DashboardPage /></RequireAuth>}>
                 {/* Route con cho chi tiết đơn hàng */}
                 <Route path="orders" element={<OrderPage />} />
               </Route>
-
-
               <Route path="/cart" element={<Cart />} />
               <Route path="/productdetail/:id" element={<ProductDetail />} />
               {/* Add the routes for CategoryProduct */}
